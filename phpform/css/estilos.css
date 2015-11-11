@@ -1,0 +1,239 @@
+*{
+margin:0;
+padding:0;
+}
+html,body{
+width:100%;
+height:100%;
+}
+body{
+font-family: 'Carrois Gothic SC', sans-serif;
+background:#F5F5F5;
+}
+a{
+text-decoration:none;
+color:inherit;
+}
+header{
+z-index:9999;
+position:fixed;
+width:100%;
+background:#37a0f3;
+box-shadow:0 .1em 1em black;
+}
+h1, h2{
+margin:auto auto auto 3%;
+}
+header a:hover{
+color:#e2e2e2;
+}
+ul{
+list-style:none;
+}
+header, h1, h2, h3, h4, h5{
+color:#F5F5F5;
+}
+h3, h5{
+margin-bottom:3%;
+background:#37a0f3;
+}
+img{
+border:none;
+}
+nav{
+float:right;
+}
+nav ul li, .litop, #portfolio li, .lihead, .licontacto, .skills p{
+display:inline-block;
+vertical-align:top;
+}
+h5{
+font-size: 1.5em;
+}
+#top, #portfolio, #contacto{
+width:100%;
+margin-bottom:10%;
+padding:15% 0 10% 0;
+}
+#portfolio ul{
+text-align:center;
+}
+#portfolio li{
+width: 22%;
+position:relative;
+border: 10px solid #37a0f3;
+margin:auto auto .3% auto;
+-webkit-filter:grayscale(50%);
+}
+#portfolio img{
+width:100%;
+max-height:100%;
+}
+#portfolio li:hover{
+border-color:#FF4500;
+-webkit-filter:grayscale(25%);
+}
+#portfolio li:hover .hide{
+display:block;
+}
+#contacto img{
+width:5%;
+vertical-align:bottom;
+}
+#contacto a{
+vertical-align: top;
+font-size: 1em;
+margin:auto auto auto 3%;
+}
+.hire{
+margin-top:20%;
+}
+.hire li{
+opacity:1!important;
+}
+.hide{
+display:none;
+height: 100%;
+width: 100%;
+position: absolute;
+background: rgba(255, 69, 0, 0.60);
+}
+.hide h4{
+margin-top: 40%;
+font-size: 2.5em;
+-webkit-text-stroke:1px black;
+}
+.wrapper{
+height:100%;
+width:90%;
+
+margin:auto;
+}
+.margenh3{
+margin-right:10%;
+}
+.perfil{
+width:60%;
+border-right:1px dotted gray;
+}
+.perfil img{
+border: 9px solid #FF4500;
+width: 25%;
+float:left;
+margin-right:1%;
+}
+.perfil img:hover{
+border-color:#f2bb24;
+}
+.perfil p{
+font-size:.8em;
+font-family: 'Noto Sans', sans-serif;
+padding-right:10%;
+line-height:2em;
+}
+.capitaliza:first-letter{
+font-size:2em;
+font-weight:900;
+}
+.skills{
+width:38%;
+}
+.skills li{
+line-height:3em;
+}
+.skills li img{
+max-width:15%;
+-webkit-filter: grayscale(100%);
+}
+.skills li:hover img{
+-webkit-filter: grayscale(0%);
+}
+.skills p{
+font-size:1.5em;
+}
+.barra{
+background:#cecece;
+height:2px;
+//border:1px solid lightgray;
+margin: auto auto 5% auto;
+border-radius:5px;
+}
+.skill-1, .skill-2, .skill-3, .skill-4{
+border-radius:5px;
+height:100%;
+width:0%;
+background:#FF4500;
+-webkit-transition:width 1s ease;
+-moz-transition:width 1s ease;
+}
+.skills li:first-child:hover .skill-1{
+width:100%;
+}
+.skills li:nth-child(2):hover .skill-2{
+width:75%;
+}
+.skills li:nth-child(3):hover .skill-3{
+width:50%;
+}
+.skills li:nth-child(4):hover .skill-4{
+width:25%;
+}
+.lihead{
+vertical-align:bottom;
+width:48%;
+margin-top:2%;
+}
+.formulario{
+width:60%;
+border-right:1px dotted gray;
+float:left;
+}
+.datoscontacto{
+width:38%;
+float:right;
+}
+.contactoder li{
+margin-bottom:5%;
+opacity:.6;
+}
+.contactoder li:hover{
+opacity:1;
+}
+.contactoizq{
+width:60%;
+border-right:1px dotted gray;
+}
+.contactoder{
+width:38%;
+}
+
+/* FORMULARIO */
+
+label {
+    display:block;
+    margin-top:10px;
+    letter-spacing:1px;
+}
+form {
+    width:75%;
+}
+input, textarea {
+    width:100%;
+    height:20px;
+    background:#666666;
+    border:2px solid #f6f6f6;
+    padding:10px;
+    margin-top:5px;
+    font-size:10px;
+    color:#ffffff;
+} 
+textarea {
+    height:100px;
+} 
+#submit {
+    width:20%;
+    height:35px;
+    border:none;
+    margin-top:20px;
+    cursor:pointer;
+}
