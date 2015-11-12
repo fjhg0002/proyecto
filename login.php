@@ -33,7 +33,7 @@ if(isset($_POST["login"])){
     			$_SESSION['session_username']=$username;
 				
 				if($dbtype=="coordinador")
-					header("Location: intropageAdmin.php");
+					header("Location: intropageCoor.php");
 				if($dbtype=="personaDown")
 						header("Location: intropageDown.php");
 				if($dbtype=="Tutor")

@@ -5,9 +5,14 @@ if(!isset($_SESSION["session_username"])) {
 } else {
 ?>
 
-<?php require_once("includes/connection.php"); ?>
+<?php require_once("includes/connection.php");
+?>
 
-<?php include("includes/header.php"); ?>
+<?php
+include("includes/header.php");
+include("modelo.php");
+;
+?>
 
 <?php
 if(isset($_POST["register"])){
@@ -111,12 +116,18 @@ function nuevaSeccion() {
 </table>
 
 <?php
+$cuestionarios=getTodosLosCuestionarios();
+foreach ($cuestionarios as $cuest){
+	echo '<h1>'.$cuest["nom_cuest"].'</h1>';
+}
+?>
+
+<?php
 $query=mysql_query("SELECT nom_cuest FROM cuestionario");
 
 while($row = mysql_fetch_array($query)){
 echo '<tr><td><a href="/muestra_datos_cuestionario.php?nombre='.$row["nom_cuest"].'">'.$row["nom_cuest"].'</a></td></tr><br>';
 }
-
 ?>
 
 <input type="button"name="button" value="Nuevo Cuestionario" onclick="nuevoCuestionario()">
@@ -131,6 +142,13 @@ echo '<tr><td><a href="/muestra_datos_cuestionario.php?nombre='.$row["nom_cuest"
     <form>
     <input type="button"name="button" value="Nuevo Usuario" onclick="nuevoUsuario()">
 	</form>
+
+<?php
+$usuarios=getTodosLosUsuarios();
+foreach ($usuarios as $usu){
+	echo '<tr><td>'.$usu["username"].'</tr></td><br>';
+}
+?>
 
 <?php
 $query=mysql_query("SELECT username FROM userlitdb");
