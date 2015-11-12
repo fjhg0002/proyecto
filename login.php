@@ -32,7 +32,7 @@ if(isset($_POST["login"])){
     		if($username == $dbusername && $password == $dbpassword){
     			$_SESSION['session_username']=$username;
 				
-				if($dbtype=="admin")
+				if($dbtype=="coordinador")
 					header("Location: intropageAdmin.php");
 				if($dbtype=="personaDown")
 						header("Location: intropageDown.php");

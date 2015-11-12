@@ -53,23 +53,23 @@ if(isset($_POST["register"])){
 ?>
 
 <script>
-	function ocultarTodos() {
+function ocultarTodos() {
         //code
-		  document.getElementById("nuevoUsuario").style.display="none";
-  document.getElementById("nuevoCuestionario").style.display="none";
-  document.getElementById("nuevaSeccion").style.display="none";
+	document.getElementById("nuevoUsuario").style.display="none";
+	document.getElementById("nuevoCuestionario").style.display="none";
+	document.getElementById("nuevaSeccion").style.display="none";
 
     }
 function nuevoUsuario() {
 	ocultarTodos();
-  document.getElementById("nuevoUsuario").style.display="block";
+	document.getElementById("nuevoUsuario").style.display="block";
 }
 </script>
 
 <script>
 function nuevoCuestionario() {
 	ocultarTodos();
-  document.getElementById("nuevoCuestionario").style.display="block";
+	document.getElementById("nuevoCuestionario").style.display="block";
 }
 </script>
 
@@ -161,7 +161,7 @@ echo '<tr><td>'.$row["username"].'</td></tr><br>';
 <label for="userlogin">Tipo de usuario:</label> <br/>
 					<select id="type" name="type"><br>
   					<option value="" selected="selected">- Selecciona Tipo de Usuario -</option>
-  					<option value="admin">Administrador</option>
+  					<option value="coordinador">Coordinador</option>
   					<option value="tutor">Tutor</option>
                 	<option value="familia">Famlia</option>
                 	<option value="personaDown">Persona Down</option>
@@ -219,6 +219,8 @@ echo '<tr><td>'.$row["nom_seccion"].'</td></tr>';
 
 </div>
 
+<?php if (!empty($message)) {echo "<p class=\"error\">" . "Mensaje: ". $message . "</p>";} ?>
+
 
 <div class="container mregister">
 <div id="nuevaSeccion"  style="display: none">
@@ -228,31 +230,39 @@ echo '<tr><td>'.$row["nom_seccion"].'</td></tr>';
 <label>Nombre Sección:<br />
  <input type="text" name="name" id="name" class value=""><br><br>
 
-<select name="subseccion" size="10" multiple>
-  <option selected>Elige Subsecciones</option>
-  <option value="1">0-1 año</option>
-  <option value="2">1-2 años</option>
-  <option value="3">2-3 años</option>
-  <option value="4">3-4 años</option>
-  <option value="4">4-5 años</option>
-  <option value="4">5-6 años</option>
-  <option value="4">6-7 años</option>
-  <option value="4">7-8 años</option>
+<label for="Subseccion">Subsecciones:<br />
 
-</select>
+<input type="checkbox" name="subseccion" value=" 0-1 año">0-1 año<br>
+<input type="checkbox" name="subseccion" value=" 1-2 años">1-2 años<br>
+<input type="checkbox" name="subseccion" value=" 2-3 años">2-3 años<br>
+<input type="checkbox" name="subseccion" value=" 3-4 años">3-4 años<br>
+<input type="checkbox" name="subseccion" value=" 4-5 años">4-5 años<br>
+<input type="checkbox" name="subseccion" value=" 5-6 años">5-6 años<br>
 
-<input type="submit" name="register" id="añadirSubseccion" class="button" value="Añadir Subsección" />
+
+<p class="submit">
+	<input type="submit" name="NewSeccion" id="NewSubseccion" class="button" value="Añadir Subseccion" />
+</p>
+
 <input type="submit" name="register" id="quitarSubseccion" class="button" value="Quitar Subsección" />
 
 <table border=1 cellspacing=0 cellpadding=2>
-	<tr><td>Secciones Seleccionadas</td></tr>
-	<tr><td>1-2 años</td></tr>
-	<tr><td>2-3 años</td></tr>
+	<tr><td>Subsecciones</td></tr>
+	<tr><td>5 a 6 años</td></tr>
+	<tr><td>2 a 3 años</td></tr>
+
 </table>
+
 </form>
 </div>
 </div>
 </div>
+
+<script type="text/javascript">
+function seleccion(valor){
+alert('Se seleccionó el valor: '+valor);
+}
+</script>
 
 
 
