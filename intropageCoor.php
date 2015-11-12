@@ -118,7 +118,7 @@ function nuevaSeccion() {
 <?php
 $cuestionarios=getTodosLosCuestionarios();
 foreach ($cuestionarios as $cuest){
-	echo '<h1>'.$cuest["nom_cuest"].'</h1>';
+	echo '<tr><td>'.$cuest["nom_cuest"].'</tr></td><br>';
 }
 ?>
 
@@ -168,7 +168,7 @@ echo '<tr><td>'.$row["username"].'</td></tr><br>';
 <div>
 	<div id="nuevoUsuario" style="display: none;">
 	<h1>Registro de Usuarios</h1>
-<form name="registerform" id="registerform" action="intropageAdmin.php" method="post">
+<form name="registerform" id="registerform" action="intropageCoor.php" method="post">
 
 <label for="user_login">Nombre:<br />
  <input type="text" name="name" id="name" class value=""><br><br>
@@ -218,15 +218,25 @@ echo '<tr><td>'.$row["username"].'</td></tr><br>';
 
 <p class="submit"> <input type="submit" name="register" id="newCuestionario" class="button" value="Añadir Pregunta" /> </p><br><br>
 
+
+<?php
+$seccion=getTodasLasSecciones();
+require('vista.php');
+?>
+
 Preguntas:
 <table border=1 cellspacing=0 cellpadding=2>
 	<tr><td>Sección</td></tr>
+
+
 <?php
 $query=mysql_query("SELECT nom_seccion FROM seccion");
 while($row = mysql_fetch_array($query)){
 echo '<tr><td>'.$row["nom_seccion"].'</td></tr>';
 }
 ?>
+	
+	
 </table><br><br>
 <p class="submit"
 <input type="submit" name="register" id="nuevoCuestionario" class="button" value="Añadir Cuestionario" />
