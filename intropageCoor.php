@@ -2,88 +2,18 @@
 session_start();
 if(!isset($_SESSION["session_username"])) {
 	header("location:login.php");
-} else {
+} else { 
 ?>
 
 <?php require_once("includes/connection.php");
+
 ?>
 
 <?php
 include("includes/header.php");
 include("modelo.php");
-;
 ?>
 
-<?php
-if(isset($_POST["register"])){
-
-	if(!empty($_POST['name']) && !empty($_POST['last_name']) && !empty($_POST['type']) && !empty($_POST['email']) && !empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['Rpassword'])) {
-
-		$name=$_POST['name'];
-		$last_name=$_POST['last_name'];
-		$type=$_POST['type'];
-		$email=$_POST['email'];
-		$username=$_POST['username'];
-		$password=$_POST['password'];
-		$Rpassword=$_POST['Rpassword'];
-
-		$query=mysql_query("SELECT * FROM userlitdb WHERE username='".$username."'");
-		$numrows=mysql_num_rows($query);
-
-		if($numrows==0) {
-			if ($password == $Rpassword){
-				$sql="INSERT INTO userlitdb
-					(name, last_name, type, email, username,password)
-					VALUES('$name','$last_name','$type','$email', '$username', '$password')";
-
-				$result=mysql_query($sql);
-
-				if($result){
-	 				$message = "Cuenta Correctamente Creada";
-				} else {
-	 				$message = "Error al ingresar datos de la informacion!";
-				}
-			} else {
-				$message = "No coinciden las contraseñas!";
-			}
-		} else {
-	 	$message = "El nombre de usuario ya existe! Por favor, intenta con otro!";
-	}
-
-} else {
-	 $message = "Todos los campos no deben de estar vacios!";
-}
-}
-
-?>
-
-<script>
-function ocultarTodos() {
-        //code
-	document.getElementById("nuevoUsuario").style.display="none";
-	document.getElementById("nuevoCuestionario").style.display="none";
-	document.getElementById("nuevaSeccion").style.display="none";
-
-    }
-function nuevoUsuario() {
-	ocultarTodos();
-	document.getElementById("nuevoUsuario").style.display="block";
-}
-</script>
-
-<script>
-function nuevoCuestionario() {
-	ocultarTodos();
-	document.getElementById("nuevoCuestionario").style.display="block";
-}
-</script>
-
-<script>
-function nuevaSeccion() {
-	ocultarTodos();
-  document.getElementById("nuevaSeccion").style.display="block";
-}
-</script>
 
 <div id="cabecera" >
 	<h2>Bienvenido, <span><?php echo $_SESSION['session_username'];?>! </span></h2>
@@ -91,74 +21,14 @@ function nuevaSeccion() {
 	<p><a href="logout.php">Finalice</a> sesión aquí!</p>
 </div>
 
+
 <div id="menu" >
-<table>
-	<tr>
-		<td><h2>Cuestionarios</h2></td>
-    </tr>
-    <tr>
-		<td><a href="joven.php">Cuestionario Joven</a></td>
-    </tr>
-	<tr>
-		<td><a href="adulto.php">Cuestionario Adulto</a></td>
-    </tr>
-	<tr>
-		<td><a href="adolescente.php">Cuestionario Adolescente</a></td>
-    </tr>
-	<tr>
-		<td><a href="niño.php">Cuestionario Niño</a></td>
-    </tr>
-	<tr>
-		<td><form>
-			<input type="button"name="button" value="Nuevo Cuestionario" onclick="nuevoCuestionario()">
-		</form></td>
-	</tr>
-</table>
 
 <?php
 $cuestionarios=getTodosLosCuestionarios();
-foreach ($cuestionarios as $cuest){
-	echo '<tr><td>'.$cuest["nom_cuest"].'</tr></td><br>';
-}
-?>
-
-<?php
-$query=mysql_query("SELECT nom_cuest FROM cuestionario");
-
-while($row = mysql_fetch_array($query)){
-echo '<tr><td><a href="/muestra_datos_cuestionario.php?nombre='.$row["nom_cuest"].'">'.$row["nom_cuest"].'</a></td></tr><br>';
-}
-?>
-
-<input type="button"name="button" value="Nuevo Cuestionario" onclick="nuevoCuestionario()">
-
-    <br>
-
-    <h2>Usuarios</h2>
-	<a href="joven.php">Jose Rodriguez</a><br>
-    <a href="adolescente.php">María Martinez</a><br>
-	<a href="adulto.php">Juan Muñoz</a><br>
-   	<a href="niño.php">Antonia Ruiz</a>
-    <form>
-    <input type="button"name="button" value="Nuevo Usuario" onclick="nuevoUsuario()">
-	</form>
-
-<?php
 $usuarios=getTodosLosUsuarios();
-foreach ($usuarios as $usu){
-	echo '<tr><td>'.$usu["username"].'</tr></td><br>';
-}
-?>
-
-<?php
-$query=mysql_query("SELECT username FROM userlitdb");
-
-while($row = mysql_fetch_array($query)){
-echo '<tr><td>'.$row["username"].'</td></tr><br>';
-}
-
-?>
-
+require('vistaMenu.php');
+?>	
 
 </div>
 
@@ -222,20 +92,7 @@ echo '<tr><td>'.$row["username"].'</td></tr><br>';
 <?php
 $seccion=getTodasLasSecciones();
 require('vista.php');
-?>
-
-Preguntas:
-<table border=1 cellspacing=0 cellpadding=2>
-	<tr><td>Sección</td></tr>
-
-
-<?php
-$query=mysql_query("SELECT nom_seccion FROM seccion");
-while($row = mysql_fetch_array($query)){
-echo '<tr><td>'.$row["nom_seccion"].'</td></tr>';
-}
-?>
-	
+?>	
 	
 </table><br><br>
 <p class="submit"

@@ -1,7 +1,9 @@
 <html>
 	<head>
 	</head>
+	
 	<body>
+		
 	<h2>Preguntas:</h2>
 	<table border=1 cellspacing=0 cellpadding=2>
 	<tr><td>Sección</td></tr>
