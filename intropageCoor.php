@@ -14,6 +14,12 @@ include("includes/header.php");
 include("modelo.php");
 ?>
 
+<script>
+function dimeSeccion(){ 
+   	var textoEscogido = document.formul.Seccion.options[indice].text
+	return textoEscogido;
+</script>
+
 
 <div id="cabecera" >
 	<h2>Bienvenido, <span><?php echo $_SESSION['session_username'];?>! </span></h2>
@@ -74,83 +80,155 @@ require('vistaMenu.php');
 
 </div>
 
+<?php
+if(isset($_POST["register"])){
+
+	if(!empty($_POST['name']) && !empty($_POST['last_name']) && !empty($_POST['type']) && !empty($_POST['email']) && !empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['Rpassword'])) {
+
+		$name=$_POST['name'];
+		$last_name=$_POST['last_name'];
+		$type=$_POST['type'];
+		$email=$_POST['email'];
+		$username=$_POST['username'];
+		$password=$_POST['password'];
+		$Rpassword=$_POST['Rpassword'];
+
+		$query=mysql_query("SELECT * FROM usuario WHERE username='".$username."'");
+		$numrows=mysql_num_rows($query);
+
+		if($numrows==0) {
+			if ($password == $Rpassword){
+				$sql="INSERT INTO usuario
+					(name, last_name, type, email, username,password)
+					VALUES('$name','$last_name','$type','$email', '$username', '$password')";
+
+				$result=mysql_query($sql);
+
+				if($result){
+	 				$message = "Cuenta Correctamente Creada";
+				} else {
+	 				$message = "Error al ingresar datos de la informacion!";
+				}
+			} else {
+				$message = "No coinciden las contraseñas!";
+			}
+		} else {
+	 	$message = "El nombre de usuario ya existe! Por favor, intenta con otro!";
+	}
+
+} else {
+	 $message = "Todos los campos no deben de estar vacios!";
+}
+}
+?>
+
 <div class="container mregister">
 	<div id="nuevoCuestionario" style="display: none">
-	<h1>Creación de Cuestionarios</h1>
-<form name="registerform" id="registerform" action="intropageAdmin.php" method="post">
+	<h1>Nuevo Cuestionario</h1>
+	<form name="registerform" id="registerform" action="intropageCoor.php" method="post">
 
-<label>Nombre:<br />
- <input type="text" name="name" id="name" class value=""><br><br>
+	<label>Nombre Cuestionario:<br />
+	<input type="text" name="nom_Cuest" id="nom_Cuest" class value=""><br><br>
 
-<p class ="submit">
-	<input type="button"name="button" value="Nueva Sección" onclick="nuevaSeccion()"><br><br>
-</p>
-
-<p class="submit"> <input type="submit" name="register" id="newCuestionario" class="button" value="Añadir Pregunta" /> </p><br><br>
+	<p class ="submit">
+		<input type="button"name="button" value="Añadir Cuestionario" ><br><br>
+	</p>
 
 
-<?php
-$seccion=getTodasLasSecciones();
-require('vista.php');
-?>	
+	<label>Nueva Sección:<br />
+	<input type="text" name="nom_Sec" id="nom_Sec" class value=""><br><br>
+
+	<p class ="submit">
+		<input type="button"name="button" value="Añadir Sección a este cuestionario" ><br><br>
+	</p>
 	
-</table><br><br>
-<p class="submit"
-<input type="submit" name="register" id="nuevoCuestionario" class="button" value="Añadir Cuestionario" />
-</p>
+	<label>Añadir Subsección de las existentes:<br />
+	<?php
+	$consulta_mysql='select * from subseccion';
+	$resultado_consulta_mysql=mysql_query($consulta_mysql);
+	echo "<select name='select1'>";
+	while($fila=mysql_fetch_array($resultado_consulta_mysql)){
+		echo "<option value='".$fila['nom_subseccion']."'>".$fila['nom_subseccion']."</option>";
+	}
+	echo "</select>";
+	?>
+	<p class ="submit">
+		<input type="button"name="button" value="Añadir Subsección"><br><br>
+	</p>
 
+	<label>o si lo prefiere añada una nueva:<br />
+	<input type="text" name="nom_Sub" id="nom_Sub" class value=""><br><br>
+	<p class ="submit">
+		<input type="button"name="button" value="Añadir nueva Subseccion"><br><br>
+	</p>
+
+
+
+	<p class ="submit">
+		<input type="button"name="button" value="Nueva Sección" onclick="nuevaSeccion()"><br><br>
+	</p>
+
+	<p class="submit"> <input type="submit" name="register" id="newCuestionario" class="button" value="Añadir Pregunta" /> </p><br><br>
+
+
+		<?php
+		$seccion=getTodasLasSecciones();
+		require('vista.php');
+		?>
+		<br>
+		<p class="submit"
+		<input type="submit" name="register" id="nuevoCuestionario" class="button" value="Añadir Cuestionario" />
+		</p>
+
+<table border=1 cellspacing=0 cellpadding=2>
+	<tr>
+		<td>Secciones:</td>
+		<td>Subsecciones:</td>
+		<td>Preguntas</td>
+	</tr>
+	<tr>
+		<td>Desarrollo Motriz:</td>
+		<td>0-1 año</td>
+		<td>¿Gatea?</td>
+	</tr>
+		<tr>
+		<td></td>
+		<td></td>
+		<td>¿Se queda sentado?</td>
+	</tr>
+
+	<tr>
+		<td></td>
+		<td>1-2 años</td>
+		<td>¿Anda solo?</td>
+	</tr>
+	<tr>
+		<td>Lenguage:</td>
+		<td>3-4 años</td>
+		<td>¿Habla?</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td></td>
+		<td>¿Dice las vocales?</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td></td>
+		<td>¿Sabe leér?</td>
+	</tr>
+</table>
 </form>
- </div>
+	
+	
+</div>
 
 </div>
 
 <?php if (!empty($message)) {echo "<p class=\"error\">" . "Mensaje: ". $message . "</p>";} ?>
 
 
-<div class="container mregister">
-<div id="nuevaSeccion"  style="display: none">
-<h1>Nueva Sección</h1>
-<form name="registerform" id="registerform" action="intropageAdmin.php" method="post">
-
-<label>Nombre Sección:<br />
- <input type="text" name="name" id="name" class value=""><br><br>
-
-<label for="Subseccion">Subsecciones:<br />
-
-<input type="checkbox" name="subseccion" value=" 0-1 año">0-1 año<br>
-<input type="checkbox" name="subseccion" value=" 1-2 años">1-2 años<br>
-<input type="checkbox" name="subseccion" value=" 2-3 años">2-3 años<br>
-<input type="checkbox" name="subseccion" value=" 3-4 años">3-4 años<br>
-<input type="checkbox" name="subseccion" value=" 4-5 años">4-5 años<br>
-<input type="checkbox" name="subseccion" value=" 5-6 años">5-6 años<br>
-
-
-<p class="submit">
-	<input type="submit" name="NewSeccion" id="NewSubseccion" class="button" value="Añadir Subseccion" />
-</p>
-
-<input type="submit" name="register" id="quitarSubseccion" class="button" value="Quitar Subsección" />
-
-<table border=1 cellspacing=0 cellpadding=2>
-	<tr><td>Subsecciones</td></tr>
-	<tr><td>5 a 6 años</td></tr>
-	<tr><td>2 a 3 años</td></tr>
-
-</table>
-
-</form>
 </div>
-</div>
-</div>
-
-<script type="text/javascript">
-function seleccion(valor){
-alert('Se seleccionó el valor: '+valor);
-}
-</script>
-
-
-
 
 <?php include("includes/footer.php"); ?>
 

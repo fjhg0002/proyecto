@@ -13,7 +13,7 @@ return $cuestionarios;
 }
 
 function getTodosLosUsuarios(){
-$resultado=mysql_query("SELECT username FROM userlitdb");
+$resultado=mysql_query("SELECT username FROM usuario");
 
 $usuarios = array();
 while($fila = mysql_fetch_array($resultado)){
@@ -46,12 +46,12 @@ if(isset($_POST["register"])){
 		$password=$_POST['password'];
 		$Rpassword=$_POST['Rpassword'];
 
-		$query=mysql_query("SELECT * FROM userlitdb WHERE username='".$username."'");
+		$query=mysql_query("SELECT * FROM usuario WHERE username='".$username."'");
 		$numrows=mysql_num_rows($query);
 
 		if($numrows==0) {
 			if ($password == $Rpassword){
-				$sql="INSERT INTO userlitdb
+				$sql="INSERT INTO usuario
 					(name, last_name, type, email, username,password)
 					VALUES('$name','$last_name','$type','$email', '$username', '$password')";
 
@@ -74,4 +74,7 @@ if(isset($_POST["register"])){
 }
 }
 }
+
+
+
 ?>

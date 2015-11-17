@@ -4,7 +4,6 @@
 			function ocultarTodos() {
 				document.getElementById("nuevoUsuario").style.display="none";
 				document.getElementById("nuevoCuestionario").style.display="none";
-				document.getElementById("nuevaSeccion").style.display="none";
 
 			}
 			function nuevoUsuario() {
@@ -15,10 +14,6 @@
 			function nuevoCuestionario() {
 				ocultarTodos();
 				document.getElementById("nuevoCuestionario").style.display="block";
-			}
-			function nuevaSeccion() {
-			ocultarTodos();
-			document.getElementById("nuevaSeccion").style.display="block";
 			}
 		</script>
 	</head>

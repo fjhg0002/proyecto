@@ -18,7 +18,7 @@ if(isset($_POST["login"])){
     	$username=$_POST['username'];
     	$password=$_POST['password'];
 
-    	$query =mysql_query("SELECT * FROM userlitdb WHERE username='".
+    	$query =mysql_query("SELECT * FROM usuario WHERE username='".
 							$username."' AND password='".$password."'");
 
     	$numrows=mysql_num_rows($query);
