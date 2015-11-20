@@ -67,14 +67,79 @@ if(isset($_POST["register"])){
 			}
 		} else {
 	 	$message = "El nombre de usuario ya existe! Por favor, intenta con otro!";
+		}
+
+	} else {
+		$message = "Todos los campos no deben de estar vacios!";
 	}
-
-} else {
-	 $message = "Todos los campos no deben de estar vacios!";
-}
 }
 }
 
 
+function añadirCuestionario(){
+if(!empty($_POST['nom_Cuest'])){
+		
+		$nom_Cuest=$_POST['nom_Cuest'];
+	
+		$query1=mysql_query("SELECT * FROM cuestionario WHERE nom_Cuest='".$nom_Cuest."'");
+		$numrows1=mysql_num_rows($query1);
+
+		if($numrows1==0) {
+				$sql1="INSERT INTO cuestionario
+					(nom_cuest)
+					VALUES('$nom_Cuest')";
+
+				$result1=mysql_query($sql1);
+
+				if($result1){
+	 				$messageCuest = "Cuestionario añadido correctamente";
+				} else {
+	 				$messageCuest = "Error al ingresar datos del cuestionario!";
+				}
+		} else {
+	 	$messageCuest = "El nombre del cuestionario ya existe! Por favor, intenta con otro!";
+		}
+
+	} else {
+		$messageCuest = "No puede estar el campo vacío!";
+	}
+	echo $nom_Cuest;
+	return $nom_Cuest;
+}
+
+
+function añadirSeccion($nomCuest){
+	if(!empty($_POST['nom_Sec'])){
+		
+		$nom_Sec=$_POST['nom_Sec'];
+		$num_cuest=mysql_query("SELECT id_cuest FROM cuestionario WHERE nom_Cuest='".$nom_Cuest."'");
+			
+		if($numrows1==0) {
+			$sql1="INSERT INTO seccion (nom_sec, id_cuest) VALUES('$nom_Sec','$num_Cuest')";
+			$result1=mysql_query($sql1);
+			if($result1){
+				$messageCuest = "Cuestionario añadido correctamente";
+			} else {
+				$messageCuest = "Error al ingresar datos del cuestionario!";
+			}
+		} else {
+			$messageCuest = "El nombre del cuestionario ya existe! Por favor, intenta con otro!";
+		}	
+	} else {
+		$messageCuest = "No puede estar el campo vacío!";
+	}
+	return $nom_Sec;
+}
+
+
+/// MAIN
+if( isset( $_POST["funcion"]) && $_POST["funcion"]=="añadirCuestionario") {
+	añadirCuestionario();
+}
 
 ?>
+
+
+
+
+

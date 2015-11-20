@@ -13,7 +13,7 @@ if(!isset($_SESSION["session_username"])) {
 include("includes/header.php");
 include("modelo.php");
 ?>
-<script src="./css/jquery-1.3.2.min.js"></script>
+
 <div id="cabecera" >
 	<h2>Bienvenido, <span><?php echo $_SESSION['session_username'];?>! </span></h2>
     <h2>Está en la sesión de Administrador</h2>
@@ -75,18 +75,6 @@ include("modelo.php");
 	registroUsuarios();
 	?>
 
-<script>
-	function addCuestionario() {
-		alert( "adding" );
-        $.post( "modelo.php"
-			   , { nom_Cuest: $("#nom_Cuest").val()
-			   , funcion: "añadirCuestionario" }
-			   , function( data ) {
-			alert( "Recibido: "+data )
-			$("#nom_Cuest").attr( "disabled", "disabled");
-		});
-    }
-</script>
 	<div id="nuevoCuestionario" style="display: none">
 		<h1>Nuevo Cuestionario</h1>
 		<form name="registerform" id="registerform" action="intropageCoor.php" method="post">
@@ -94,9 +82,9 @@ include("modelo.php");
 			<label>Nombre Cuestionario:<br />
 			<input type="text" name="nom_Cuest" id="nom_Cuest" class value=""><br><br>
 	
+	
 			<p class ="submit">
-				<input type="button" name="cuest" id="cuest" class="button" value="Añadir Cuestionario"
-					   onclick="addCuestionario()"><br><br>
+				<input type="submit" name="cuest" id="cuest" class="button" value="Añadir Cuestionario" ><br><br>
 			</p>  		
 	
 			<?php if (!empty($messageCuest)) {echo "<p class=\"error\">" . "Mensaje: ". $messageCuest . "</p>";} ?>
@@ -104,15 +92,16 @@ include("modelo.php");
 
 			<label>Nueva Sección:<br />
 			<input type="text" name="nom_Sec" id="nom_Sec" class value=""><br><br>
+
 			<p class ="submit">
 				<input type="button"name="button" value="Añadir Sección a este cuestionario" ><br><br>
 			</p>
 	
 	
 			<?php
-			//require_once("modelo.php");
-			//$nom_Cuest=añadirCuestionario();
-			//$nom_Secc=añadirSeccion('nom_Sec');
+			require_once("modelo.php");
+			$nom_Cuest=añadirCuestionario();
+			$nom_Secc=añadirSeccion('nom_Sec');
 			?>
 			
 			<label>Añadir Subsección de las existentes:<br />
