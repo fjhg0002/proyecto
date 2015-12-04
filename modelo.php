@@ -103,32 +103,21 @@ if(!empty($_POST['nom_Cuest'])){
 	} else {
 		$messageCuest = "No puede estar el campo vacío!";
 	}
-	echo $nom_Cuest;
-	return $nom_Cuest;
 }
 
 
-function añadirSeccion($nomCuest){
-	if(!empty($_POST['nom_Sec'])){
-		
+function añadirSeccion(){
+	if(!empty($_POST['nom_Sec']) && !empty($_POST['nom_Cuest'])){
+	
 		$nom_Sec=$_POST['nom_Sec'];
-		$num_cuest=mysql_query("SELECT id_cuest FROM cuestionario WHERE nom_Cuest='".$nom_Cuest."'");
+		$nom_Cuest=$_POST['nom_Cuest'];
+		
+		$num_Cuest=mysql_query("SELECT id_cuest FROM cuestionario WHERE nom_cuest='$nom_Cuest'");
 			
-		if($numrows1==0) {
-			$sql1="INSERT INTO seccion (nom_sec, id_cuest) VALUES('$nom_Sec','$num_Cuest')";
-			$result1=mysql_query($sql1);
-			if($result1){
-				$messageCuest = "Cuestionario añadido correctamente";
-			} else {
-				$messageCuest = "Error al ingresar datos del cuestionario!";
-			}
-		} else {
-			$messageCuest = "El nombre del cuestionario ya existe! Por favor, intenta con otro!";
-		}	
-	} else {
-		$messageCuest = "No puede estar el campo vacío!";
+		$sql2="INSERT INTO seccion (nom_seccion, id_cuest) VALUES('$nom_Sec', '$num_Cuest')";
+		$result2=mysql_query($sql2);
+
 	}
-	return $nom_Sec;
 }
 
 
@@ -136,6 +125,11 @@ function añadirSeccion($nomCuest){
 if( isset( $_POST["funcion"]) && $_POST["funcion"]=="añadirCuestionario") {
 	añadirCuestionario();
 }
+
+if( isset( $_POST["funcion"]) && $_POST["funcion"]=="añadirSeccion") {
+	añadirSeccion();
+}
+
 
 ?>
 

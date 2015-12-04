@@ -15,9 +15,9 @@ include("modelo.php");
 ?>
 <script src="./css/jquery-1.3.2.min.js"></script>
 <div id="cabecera" >
-	<h2>Bienvenido, <span><?php echo $_SESSION['session_username'];?>! </span></h2>
-    <h2>Está en la sesión de Administrador</h2>
-	<p><a href="logout.php">Finalice</a> sesión aquí!</p>
+	<h1>Bienvenido a Down Progress, sistema de seguimiento.</h1>
+	<h3>¿Que tal está <span><?php echo $_SESSION['session_username'];?>! </span>?
+		Está en la sesión de Administrador, si quiere finalizar sesión pulse <a href="logout.php">aquí</a> </h3>
 </div>
 
 
@@ -83,37 +83,53 @@ include("modelo.php");
 			   , funcion: "añadirCuestionario" }
 			   , function( data ) {
 			alert( "Recibido: "+data )
-			$("#nom_Cuest").attr( "disabled", "disabled");
+			//$("#nom_Cuest").attr( "disabled", "disabled");
+		});
+    }
+	
+	function addSeccion() {
+		alert( "adding" );
+        $.post( "modelo.php"
+			   , { nom_Cuest: $("#nom_Cuest").val()
+			   , nom_Sec: $("#nom_Sec").val()
+			   , funcion: "añadirSeccion" }
+			   , function( data ) {
+			alert( "Recibido: "+data )
+			//$("#nom_Sec").attr( "disabled", "disabled");
 		});
     }
 </script>
+
 	<div id="nuevoCuestionario" style="display: none">
-		<h1>Nuevo Cuestionario</h1>
 		<form name="registerform" id="registerform" action="intropageCoor.php" method="post">
-	
+			<h2>Nuevo Cuestionario</h2>
 			<label>Nombre Cuestionario:<br />
-			<input type="text" name="nom_Cuest" id="nom_Cuest" class value=""><br><br>
+			<input type="text" id="nom_Cuest" class value=""><br><br>
 	
 			<p class ="submit">
-				<input type="button" name="cuest" id="cuest" class="button" value="Añadir Cuestionario"
+				<input type="button" id="button" class="button" value="Añadir Cuestionario"
 					   onclick="addCuestionario()"><br><br>
 			</p>  		
-	
-			<?php if (!empty($messageCuest)) {echo "<p class=\"error\">" . "Mensaje: ". $messageCuest . "</p>";} ?>
 
-
-			<label>Nueva Sección:<br />
-			<input type="text" name="nom_Sec" id="nom_Sec" class value=""><br><br>
-			<p class ="submit">
-				<input type="button"name="button" value="Añadir Sección a este cuestionario" ><br><br>
-			</p>
-	
-	
+			<h2>Nueva Sección:</h2><br>
+			<label>Selecciona una sección de las siguientes o escriba una nueva:<br><br>
+			
 			<?php
-			//require_once("modelo.php");
-			//$nom_Cuest=añadirCuestionario();
-			//$nom_Secc=añadirSeccion('nom_Sec');
-			?>
+			$consulta_mysql='select * from seccion';
+			$resultado_consulta_mysql=mysql_query($consulta_mysql);
+			echo "<select multiple='multiple' size='5' id='listaSecciones'>";
+			while($fila=mysql_fetch_array($resultado_consulta_mysql)){
+				echo "<option value='".$fila['nom_seccion']."'>".$fila['nom_seccion']."</option>";
+			}
+			echo "</select><br>";
+			?>			
+			
+			<input type="text" id="nom_Sec" class value="Escriba una nueva"><br><br>
+			<p class ="submit">
+				<input type="button" id="button" classs="button" value="Añadir Sección a este cuestionario"
+					   onclick="addSeccion()"><br><br>
+			</p>
+			
 			
 			<label>Añadir Subsección de las existentes:<br />
 			<?php
@@ -125,6 +141,7 @@ include("modelo.php");
 			}
 			echo "</select>";
 			?>
+			
 			<p class ="submit">
 				<input type="button"name="button" value="Añadir Subsección"><br><br>
 			</p>

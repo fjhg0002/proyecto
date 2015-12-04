@@ -20,18 +20,22 @@
 	
 	<body>
 		<nav id = "menu">
-			<h2>Cuestionarios</h2>
+			<h2>Cuestionarios</h2>		
+				<?php echo "<select multiple='multiple' size='5' id='listadeCuestionarios'>" ?>
 				<?php foreach ($cuestionarios as $cuest): ?>
-				<?php echo $cuest["nom_cuest"] ?><br>
+				<?php echo "<option value='".$cuest["nom_cuest"]."'>".$cuest["nom_cuest"]."</option>"; ?>
 				<?php endforeach; ?>
-				<input type="button"name="button" value="Nuevo Cuestionario" onclick="nuevoCuestionario()"><br>
-
-				
-			<h2>Usuarios</h2>
+				<?php echo"</select>"?><br>
+				<input type="button" id="button" value="Nuevo Cuestionario" onclick="nuevoCuestionario()"><br>
+							
+			<h2>Usuarios</h2> <br/>
+				<?php echo "<select multiple='multiple' size='5' id='listadeUsuarios'>" ?>
 				<?php foreach ($usuarios as $usu): ?>
-				<?php echo $usu["username"] ?><br>
+				<?php echo "<option value='".$usu["username"]."'>".$usu["username"]."</option>"; ?>
 				<?php endforeach; ?>
-				<input type="button"name="button" value="Nuevo Usuario" onclick="nuevoUsuario()">
+				<?php echo"</select>"?><br>
+				<input type="button" id="button" value="Nuevo Usuario" onclick="nuevoUsuario()">
+
 </body>
 </html>
 
