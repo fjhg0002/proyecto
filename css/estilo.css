@@ -32,11 +32,19 @@ h1{
 }
 h2{
 	margin: 20px;
-	color: grey;
+	color: #088A08;
 	font-family: Verdana, Helvetica, Arial;
 	font-size: 20px;
 
 }
+
+#selectDesplegable{
+	margin:10px;
+	padding:20px;
+	font-family: Verdana, Helvetica, Arial;
+	font-size:15px;
+}
+
 
 #login{
 	margin:50px;
@@ -66,9 +74,7 @@ h2{
 	color:purple;
 	margin: 10px;
 	font-family: Verdana, Helvetica, Arial;
-	font
-	background: blue;
-
+	background-color: #A9F5A9
 }
 
 #contenido{
@@ -78,6 +84,15 @@ h2{
 	float:left;
 	background: #fff;
 	border: 1px solid red;
+}
+
+#TablaPreguntas{
+	margin:10px;
+	width:250px;
+	height: 1000px;
+	float:left;
+	background: #fff;
+	border: 1px solid green;
 }
 
 #pie{

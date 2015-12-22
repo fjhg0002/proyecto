@@ -99,37 +99,71 @@ if(!empty($_POST['nom_Cuest'])){
 		} else {
 	 	$messageCuest = "El nombre del cuestionario ya existe! Por favor, intenta con otro!";
 		}
-
 	} else {
 		$messageCuest = "No puede estar el campo vacío!";
 	}
+	return $messageCuest;
 }
 
 
 function añadirSeccion(){
-	if(!empty($_POST['nom_Sec']) && !empty($_POST['nom_Cuest'])){
+	if( !empty($_POST['nom_Cuest']) && (!empty($_POST['nom_Sec']) || !empty($_POST['secciones']))){
 	
-		$nom_Sec=$_POST['nom_Sec'];
 		$nom_Cuest=$_POST['nom_Cuest'];
+		$secciones = $_POST['secciones'];
+		$nom_Sec=$_POST['nom_Sec'];
 		
-		$num_Cuest=mysql_query("SELECT id_cuest FROM cuestionario WHERE nom_cuest='$nom_Cuest'");
-			
-		$sql2="INSERT INTO seccion (nom_seccion, id_cuest) VALUES('$nom_Sec', '$num_Cuest')";
-		$result2=mysql_query($sql2);
+		$consulta=mysql_query("SELECT id_cuest FROM cuestionario WHERE nom_cuest='$nom_Cuest'");
+		
+		$fila=mysql_fetch_assoc($consulta);
+		$num_Cuest=$fila['id_cuest'];
+		
+		if($secciones =="otra"){	
+			$sql2="INSERT INTO seccion (nom_seccion, id_cuest) VALUES('$nom_Sec', '$num_Cuest')";
+			$result2=mysql_query($sql2);
+		}else{
+			$sql2="INSERT INTO seccion (nom_seccion, id_cuest) VALUES('$secciones', '$num_Cuest')";
+			$result2=mysql_query($sql2);
+		}
+	}
+}
 
+function añadirSubseccion(){
+	if(!empty($_POST['secciones2']) && (!empty($_POST['listaSubsecciones']) || !empty ($_POST['nom_Sub']))){
+		
+		$secciones2=$_POST['secciones2'];
+		$listaSubsecciones=$_POST['listaSubsecciones'];
+		$nom_Sub=$_POST['nom_Sub'];
+		
+		$consulta2=mysql_query("SELECT id_seccion FROM seccion WHERE nom_Seccion='$secciones2'");
+							  
+		$fila2=mysql_fetch_assoc($consulta2);
+		$num_Sec = $fila2['id_seccion'];
+		
+		if($listaSubsecciones=="otra"){
+			$sql3="INSERT INTO subseccion (nom_Subseccion, id_seccion) VALUES ('$nom_Sub','$num_Sec')";
+			$result3=mysql_query($sql3);
+		}else{
+			$sql3="INSERT INTO subseccion (nom_Subseccion, id_seccion) VALUES ('$listaSubsecciones','$num_Sec')";
+			$result3=mysql_query($sql3);
+		}
 	}
 }
 
 
+
 /// MAIN
 if( isset( $_POST["funcion"]) && $_POST["funcion"]=="añadirCuestionario") {
-	añadirCuestionario();
+	echo añadirCuestionario();
 }
 
 if( isset( $_POST["funcion"]) && $_POST["funcion"]=="añadirSeccion") {
 	añadirSeccion();
 }
 
+if( isset( $_POST["funcion"]) && $_POST["funcion"]=="añadirSubseccion") {
+	añadirSubseccion();
+}
 
 ?>
 

@@ -5,6 +5,7 @@
 	<body>
 		
 		<h2>Preguntas:</h2>
+		
 		<table border=1 cellspacing=0 cellpadding=2>
 		<tr><td>Sección</td></tr>
 
@@ -14,10 +15,11 @@
 		
 		<!-- echo '<tr><td><a href="/muestra_datos_cuestionario.php?nombre='.$row["nom_cuest"].'">'.$row["nom_cuest"].'</a></td></tr><br>';
 		-->
-	</td></tr>
-<?php endforeach; ?>
-	</table>
-</body>
+		</td></tr>
+		<?php endforeach; ?>
+		</table>
+
+	</body>
 </html>
 
 
