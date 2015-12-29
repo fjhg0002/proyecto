@@ -119,11 +119,11 @@ function añadirSeccion(){
 		$num_Cuest=$fila['id_cuest'];
 		
 		if($secciones =="otra"){	
-			$sql2="INSERT INTO seccion (nom_seccion, id_cuest) VALUES('$nom_Sec', '$num_Cuest')";
-			$result2=mysql_query($sql2);
+			$sql="INSERT INTO seccion (nom_seccion, id_cuest) VALUES('$nom_Sec', '$num_Cuest')";
+			$result2=mysql_query($sql);
 		}else{
-			$sql2="INSERT INTO seccion (nom_seccion, id_cuest) VALUES('$secciones', '$num_Cuest')";
-			$result2=mysql_query($sql2);
+			$sql="INSERT INTO seccion (nom_seccion, id_cuest) VALUES('$secciones', '$num_Cuest')";
+			$result=mysql_query($sql);
 		}
 	}
 }
@@ -141,12 +141,37 @@ function añadirSubseccion(){
 		$num_Sec = $fila2['id_seccion'];
 		
 		if($listaSubsecciones=="otra"){
-			$sql3="INSERT INTO subseccion (nom_Subseccion, id_seccion) VALUES ('$nom_Sub','$num_Sec')";
-			$result3=mysql_query($sql3);
+			$sql="INSERT INTO subseccion (nom_Subseccion, id_seccion) VALUES ('$nom_Sub','$num_Sec')";
+			$result=mysql_query($sql);
 		}else{
-			$sql3="INSERT INTO subseccion (nom_Subseccion, id_seccion) VALUES ('$listaSubsecciones','$num_Sec')";
-			$result3=mysql_query($sql3);
+			$sql="INSERT INTO subseccion (nom_Subseccion, id_seccion) VALUES ('$listaSubsecciones','$num_Sec')";
+			$result=mysql_query($sql);
 		}
+	}
+}
+
+function añadirpregunta(){
+	if(!empty($_POST['tit_Pregunta']) && !empty($_POST['cuestionarios']) && !empty ($_POST['seccionesP']) && !empty($_POST['subseccionesP'])){
+		
+		$tit_Pregunta=$_POST['tit_Pregunta'];
+		$cuestionarios=$_POST['cuestionarios'];
+		$seccionesP=$_POST['seccionesP'];
+		$subseccionesP=$_POST['subseccionesP'];
+
+		$consulta3=mysql_query("SELECT id_cuest FROM cuestionario WHERE nom_cuest='$cuestionarios'");
+		$consulta4=mysql_query("SELECT id_seccion FROM seccion WHERE nom_seccion='$seccionesP'");
+		$consulta5=mysql_query("SELECT id_subseccion FROM subseccion WHERE nom_subseccion='$subseccionesP'");
+
+		$fila3=mysql_fetch_assoc($consulta3);
+		$fila4=mysql_fetch_assoc($consulta4);
+		$fila5=mysql_fetch_assoc($consulta5);
+
+		$num_Cuest = $fila3['id_cuest'];
+		$num_Sec = $fila4['id_seccion'];
+		$num_Sub = $fila5['id_subseccion'];
+
+		$sql="INSERT INTO pregunta (enunciado, id_cuest, id_cuest, id_Sec, id_Sub) VALUES ('$tit_Pregunta','$num_Cuest','$num_Sec','$num_Sub')";
+		$result=mysql_query($sql);
 	}
 }
 
@@ -164,6 +189,11 @@ if( isset( $_POST["funcion"]) && $_POST["funcion"]=="añadirSeccion") {
 if( isset( $_POST["funcion"]) && $_POST["funcion"]=="añadirSubseccion") {
 	añadirSubseccion();
 }
+
+if( isset( $_POST["funcion"]) && $_POST["funcion"]=="añadirPregunta") {
+	añadirPregunta();
+}
+
 
 ?>
 
