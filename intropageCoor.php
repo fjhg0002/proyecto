@@ -5,46 +5,24 @@ if(!isset($_SESSION["session_username"])) {
 } else { 
 ?>
 
-<?php require_once("includes/connection.php");
-
-?>
-
-		<script>
-			function ocultarBloques() {
-				document.getElementById("nuevaSeccion").style.display="none";
-				document.getElementById("nuevaSubseccion").style.display="none";
-				document.getElementById("nuevaPregunta").style.display="none";
-			}
-			function nuevaSeccion() {
-				ocultarBloques();
-				document.getElementById("nuevaSeccion").style.display="block";
-			}
-			function nuevaSubseccion() {
-				ocultarBloques();
-				document.getElementById("nuevaSubseccion").style.display="block";
-			}
-			function nuevaPregunta() {
-				ocultarBloques();
-				document.getElementById("nuevaPregunta").style.display="block";
-			}
-			function verListado() {
-                document.getElementById("Lista").style.display="block";
-            }
-			
-		</script>
-
-
-
-
 <?php
+require_once("includes/connection.php");
 include("includes/header.php");
 include("modelo.php");
+include("vistaContenido.php")
 ?>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+
+<script>
+	
+	
+	
+</script>
+
 
 <div id="cabecera" >
 	<h1>Bienvenido a Down Progress, sistema de seguimiento.</h1>
@@ -107,155 +85,39 @@ include("modelo.php");
 	registroUsuarios();
 	?>
 
-<script>
-	function addCuestionario() {
-		alert( "adding" );
-        $.post( "modelo.php"
-			   , { nom_Cuest: $("#nom_Cuest").val()
-			   , funcion: "añadirCuestionario" }
-			   , function( data ) {
-			document.getElementById("Lista").style.display="block";
-			alert( "Recibido: "+data )
-			//$("#nom_Cuest").attr( "disabled", "disabled");
-		});
-    }
-	
-	function addSeccion() {
-		alert( "adding seccion "+$("#secciones").val() );
-        $.post( "modelo.php"
-			   , { nom_Cuest: $("#nom_Cuest").val()
-			   , nom_Sec: $("#nom_Sec").val()
-			   , secciones: $("#secciones").val()
-			   , funcion: "añadirSeccion" }
-			   , function( data ) {
-			alert( "Recibido: "+data +$("#secciones").val() );
-			//$("#nom_Sec").attr( "disabled", "disabled");
-		});
-    }
-	
-	function addSubseccion() {
-		alert("adding subseccion" + $("#secciones2").val() + $("#listaSubsecciones").val());
-		$.post("modelo.php"
-			   , { secciones2: $("#secciones2").val()
-			   , listaSubsecciones: $("#listaSubsecciones").val()
-			   , nom_Sub: $("#nom_Sub").val()
-			   , funcion: "añadirSubseccion" }
-			   , function( data ) {
-			alert( "Recibido: "+data)
-		});
-	}
-	
-	function addPregunta() {
-		alert("adding pregunta" + $("#tit_Pregunta").val());
-		$.post("modelo.php"
-			   , { tit_Pregunta: $("#tit_Pregunta").val()
-			   , cuestionarios: $("#cuestionarios").val()
-			   , seccionesP: $("#seccionesP").val()
-			   , subseccionesP: $("#subseccionesP").val()
-			   , funcion: "añadirPregunta" }
-			   , function( data ) {
-			alert( "Recibido: "+data)
-		});
-	}
-
-	
-	$(function dialogSeccion() {
-              $("#nuevaSeccion").dialog({
-                                  autoOpen: false,
-                                  modal: true,
-                                  buttons: {
-                                  "Aceptar": function dialogSeccion() {
-                                  $(this).dialog("close");
-                                  },
-                                  "Cerrar": function dialogSeccion() {
-                                  $(this).dialog("close");
-                                  }
-                                  }
-                                  });
-              $("#button1")
-              .button()
-              .click(function dialogSeccion() {
-                     $("#nuevaSeccion").dialog("option", "width", 600);
-                     $("#nuevaSeccion").dialog("option", "height", 350);
-                     $("#nuevaSeccion").dialog("option", "resizable", false);
-                     $("#nuevaSeccion").dialog("open");
-                     });
-    });
-	
-	$(function dialogSubseccion() {
-              $("#nuevaSubseccion").dialog({
-                                  autoOpen: false,
-                                  modal: true,
-                                  buttons: {
-                                  "Aceptar": function dialogSubseccion() {
-                                  $(this).dialog("close");
-                                  },
-                                  "Cerrar": function dialogSubseccion() {
-                                  $(this).dialog("close");
-                                  }
-                                  }
-                                  });
-              $("#button3")
-              .button()
-              .click(function dialogSubseccion() {
-                     $("#nuevaSubseccion").dialog("option", "width", 600);
-                     $("#nuevaSubseccion").dialog("option", "height", 450);
-                     $("#nuevaSubseccion").dialog("option", "resizable", false);
-                     $("#nuevaSubseccion").dialog("open");
-                     });
-    });
-	
-	
-	$(function dialogPregunta() {
-              $("#nuevaPregunta").dialog({
-                                  autoOpen: false,
-                                  modal: true,
-                                  buttons: {
-                                  "Aceptar": function dialogPregunta() {
-                                  $(this).dialog("close");
-                                  },
-                                  "Cerrar": function dialogPregunta() {
-                                  $(this).dialog("close");
-                                  }
-                                  }
-                                  });
-              $("#button5")
-              .button()
-              .click(function dialogPregunta() {
-                     $("#nuevaPregunta").dialog("option", "width", 600);
-                     $("#nuevaPregunta").dialog("option", "height", 700);
-                     $("#nuevaPregunta").dialog("option", "resizable", false);
-                     $("#nuevaPregunta").dialog("open");
-                     });
-    });
-
-</script>
 
 
 	<div id="nuevoCuestionario" style="display: none">
-		
+			
+			<div id="cuestionario" style="display: block">
 			<h2>Nuevo Cuestionario</h2>
 			<label>Nombre Cuestionario:<br />
 			<input type="text" id="nom_Cuest" class value=""><br><br>
 
 			<p class ="submit">
 				<input type="button" id="button" class="button" value="Añadir Cuestionario"
-					   onclick="addCuestionario(),verListado()"><br><br>
+					   onclick="addCuestionario(),verListado(),ocultarCuestionario()"><br><br>
 			</p>
+			
+			</div>
 					
 			<div id="Lista" style=display:none>
 			<table>
 			<tr><td>
+			
 			<div id="ListadoPreguntas" >
 				<?php
 				$consulta_Seccion='select * from seccion';
 				$resultado_consulta_Seccion=mysql_query($consulta_Seccion);
+				$fila1=mysql_fetch_array($resultado_consulta_Seccion);
 				
 				$consulta_Subseccion='select * from subseccion';
 				$resultado_consulta_Subseccion=mysql_query($consulta_Subseccion);
+				$fila2=mysql_fetch_array($resultado_consulta_Subseccion);
 				
 				$consulta_Pregunta='select * from pregunta';
 				$resultado_consulta_Pregunta=mysql_query($consulta_Pregunta);
+				$fila3=mysql_fetch_array($resultado_consulta_Pregunta);
 				
 				echo "<table border=1 cellspacing=0 cellpadding=2table>";
 				while($fila1=mysql_fetch_array($resultado_consulta_Seccion)){
@@ -264,11 +126,15 @@ include("modelo.php");
 					echo "</tr></td>";
 					while($fila2=mysql_fetch_array($resultado_consulta_Subseccion)){
 						echo "<tr><td bgcolor='#BDBDBD'>";
-						echo $fila2["nom_subseccion"];
+						if($fila1["id_seccion"] == $fila2["id_seccion"]){
+							echo $fila2["nom_subseccion"];
+						}
 						echo "</tr></td>";
 						while($fila3=mysql_fetch_array($resultado_consulta_Pregunta)){
 							echo "<tr><td bgcolor='#E6E6E6'>";
-							echo $fila3["enunciado"];
+							if($fila2["id_subseccion"] == $fila3["id_Sub"]){
+								echo $fila3["enunciado"];
+							}	
 							echo "</tr></td>";
 						}	
 					}
@@ -283,11 +149,11 @@ include("modelo.php");
 			<div id="botonesListaPreguntas">
 			<table>
 			<tr> <td> <p class ="submit"> <input type="button" id="button1" class="button" value="Nueva Seccion" onclick="nuevaSeccion()"> </p> </tr> </td>
-			<tr> <td> <p class ="submit"> <input type="button" id="button2" class="button" value="Eliminar Seccion" onclick="eliminarSeccion()"> </p> </tr> </td>
+			<tr> <td> <p class ="submit"> <input type="button" id="button2" class="button" value="Eliminar Seccion" onclick="eliminaSeccion()"> </p> </tr> </td>
 			<tr> <td> <p class ="submit"> <input type="button" id="button3" class="button" value="Nueva Subsección" onclick="nuevaSubseccion()"> </p> </tr> </td>
-			<tr> <td> <p class ="submit"> <input type="button" id="button4" class="button" value="Eliminar Subsección" onclick="eliminarSubseccion()"> </p> </tr> </td>
+			<tr> <td> <p class ="submit"> <input type="button" id="button4" class="button" value="Eliminar Subsección" onclick="eliminaSubseccion()"> </p> </tr> </td>
 			<tr> <td> <p class ="submit"><input type="button" id="button5" class="button" value="Nueva Pregunta" onclick="nuevaPregunta()"> </p> </tr> </td>
-			<tr> <td> <p class ="submit"><input type="button" id="button6" class="button" value="Eliminar Pregunta"onclick="eliminarPregunta()"> </p> </tr> </td>
+			<tr> <td> <p class ="submit"><input type="button" id="button6" class="button" value="Eliminar Pregunta"onclick="eliminaPregunta()"> </p> </tr> </td>
 			
 			</table>
 			</div>
@@ -297,18 +163,14 @@ include("modelo.php");
 			</table>			
 			
 			<div id="nuevaSeccion" title="Nueva Sección" style="display:none">
+				
 				<label>Selecciona una sección de las siguientes:
-			
 				<?php
-				$consulta_mysql='select * from seccion';
-				$resultado_consulta_mysql=mysql_query($consulta_mysql);
-				echo "<select id='secciones' onchange='if(this.value=='otra') {
-														document.getElementById('otraSeccion').disabled = false
-														}else{
-														document.getElementById('otraSeccion').disabled = true}'>";
+				$secciones=getTodasLasSecciones();
+				echo "<select id='secciones'>";
 				echo "<option value='ninguna'>Selecciona una Sección</option>";
-				while($fila=mysql_fetch_array($resultado_consulta_mysql)){
-					echo "<option value='".$fila['nom_seccion']."'>".$fila['nom_seccion']."</option>";
+				foreach ($secciones as $sec){
+					echo "<option value='".$sec['nom_seccion']."'>".$sec['nom_seccion']."</option>";
 				}
 				echo "<option value='otra'>otra</option>";
 				echo "</select><br>";
@@ -321,36 +183,50 @@ include("modelo.php");
 				</p>
 			</div>
 			
-			<div id="nuevaSubseccion" title="Nueva Subsección" style="display: none">
-				<label>Elige la Sección donde quieres añadir la subsección:<br><br>
-
+			<div id="eliminaSeccion" title="Eliminar Sección" style="display:none">
+				
+				<label>Selecciona una sección de las siguientes:
 				<?php
-				$consulta_mysql='select * from seccion';
-				$resultado_consulta_mysql=mysql_query($consulta_mysql);
-				echo "<select id='secciones2' onchange='if(this.value=='otra') {
-														document.getElementById('otraSeccion').disabled = false
-														}else{
-														document.getElementById('otraSeccion').disabled = true}'>";
+				$secciones=getTodasLasSecciones();
+				echo "<select id='secciones'>";
 				echo "<option value='ninguna'>Selecciona una Sección</option>";
-				while($fila=mysql_fetch_array($resultado_consulta_mysql)){
-					echo "<option value='".$fila['nom_seccion']."'>".$fila['nom_seccion']."</option>";
+				foreach ($secciones as $sec){
+					echo "<option value='".$sec['nom_seccion']."'>".$sec['nom_seccion']."</option>";
+				}
+				echo "</select><br>";
+				?>			
+			
+				<p class ="submit">
+					<input type="button" id="button" classs="button" value="Eliminar esta Sección de este cuestionario"
+						   onclick="deleteSeccion()"><br><br>
+				</p>
+			</div>
+			
+			<div id="nuevaSubseccion" title="Nueva Subsección" style="display: none">
+				
+				<label>Elige la Sección donde quieres añadir la subsección:<br><br>
+				<?php
+				$secciones=getTodasLasSecciones();
+				echo "<select id='secciones2'>";
+				echo "<option value='ninguna'>Selecciona una Sección</option>";
+				foreach ($secciones as $sec){
+					echo "<option value='".$sec['nom_seccion']."'>".$sec['nom_seccion']."</option>";
 				}
 				echo "</select><br>";
 				?>			
 
 				
 				<label>Selecciona la subseccion que quieres añadir o escriba una nueva:<br><br>
-
 				<?php
-				$consulta_mysql='select * from subseccion';
-				$resultado_consulta_mysql=mysql_query($consulta_mysql);
+				$subsecciones=getTodasLasSubsecciones();
 				echo "<select id='listaSubsecciones'>";
 				echo "<option value='ninguna'>Selecciona una Subsección</option>";
-				while($fila=mysql_fetch_array($resultado_consulta_mysql)){
-					echo "<option value='".$fila['nom_subseccion']."'>".$fila['nom_subseccion']."</option>";
+				foreach ($subsecciones as $subsec){
+					echo "<option value='".$subsec["nom_subseccion"]."'>".$subsec["nom_subseccion"]."</option>";
 				}
 				echo "<option value='otra'>otra</option>";
 				echo "</select><br>";
+				
 				?>
 				
 				<input type="text" id="nom_Sub" class value=""><br><br>
@@ -360,39 +236,58 @@ include("modelo.php");
 
 			</div>
 			
+			<div id="eliminaSubseccion" title="Eliminar Subsección" style="display: none">
+				
+				<label>Elige la Sección donde quieres eliminar la subsección:<br><br>
+				<?php
+				$secciones=getTodasLasSecciones();
+				echo "<select id='secciones2'>";
+				echo "<option value='ninguna'>Selecciona una Sección</option>";
+				foreach ($secciones as $sec){
+					echo "<option value='".$sec['nom_seccion']."'>".$sec['nom_seccion']."</option>";
+				}
+				echo "</select><br>";
+				?>			
+
+				
+				<label>Selecciona la subseccion que quieres eliminar:<br><br>
+				<?php
+				$subsecciones=getTodasLasSubsecciones();
+				echo "<select id='listaSubsecciones'>";
+				echo "<option value='ninguna'>Selecciona una Subsección</option>";
+				foreach ($subsecciones as $subsec){
+					echo "<option value='".$subsec["nom_subseccion"]."'>".$subsec["nom_subseccion"]."</option>";
+				}
+				echo "<option value='otra'>otra</option>";
+				echo "</select><br>";
+				
+				?>
+				<p class ="submit">
+					<input type="button"id="button" value="Eliminar Subsección de este cuestionario" onclick="deleteSubseccion()"><br><br>
+				</p>
+
+			</div>
+			
 			<div id="nuevaPregunta" title="Nueva Pregunta" style="display: none">
 				<label>Título pregunta:
 				<input type="text" id="tit_Pregunta" class value=""><br><br>
-
-				<label>Selecciona el cuestionario donde quiere insertar la pregunta:
-				<?php
-				$consulta_mysql='select * from cuestionario';
-				$resultado_consulta_mysql=mysql_query($consulta_mysql);
-				echo "<select id='cuestionarios'>";
-				while($fila=mysql_fetch_array($resultado_consulta_mysql)){
-					echo "<option value='".$fila['nom_cuest']."'>".$fila['nom_cuest']."</option>";
-				}
-				echo "</select><br>";
-				?>
 				
 				<label>Selecciona la sección donde quiere insertar la pregunta:
 				<?php
-				$consulta_mysql='select * from seccion';
-				$resultado_consulta_mysql=mysql_query($consulta_mysql);
+				$secciones=getTodasLasSecciones();
 				echo "<select id='seccionesP'>";
-				while($fila=mysql_fetch_array($resultado_consulta_mysql)){
-					echo "<option value='".$fila['nom_seccion']."'>".$fila['nom_seccion']."</option>";
+				foreach ($secciones as $sec){
+					echo "<option value='".$sec['nom_seccion']."'>".$sec['nom_seccion']."</option>";
 				}
 				echo "</select><br>";
 				?>
 				
 				<label>Selecciona la subsección donde quiere insertar la pregunta:
 				<?php
-				$consulta_mysql='select * from subseccion';
-				$resultado_consulta_mysql=mysql_query($consulta_mysql);
+				$subsecciones=getTodasLasSubsecciones();
 				echo "<select id='subseccionesP'>";
-				while($fila=mysql_fetch_array($resultado_consulta_mysql)){
-					echo "<option value='".$fila['nom_subseccion']."'>".$fila['nom_subseccion']."</option>";
+				foreach ($subsecciones as $sub){
+					echo "<option value='".$sub['nom_subseccion']."'>".$sub['nom_subseccion']."</option>";
 				}
 				echo "</select><br>";
 				?>
@@ -421,9 +316,35 @@ include("modelo.php");
 				
 			</div>
 
+			<div id="eliminaPregunta" title="Eliminar Pregunta" style="display: none">
+				
+				<label>Selecciona la sección donde quiere eliminar la pregunta:
+				<?php
+				$secciones=getTodasLasSecciones();
+				echo "<select id='seccionesP'>";
+				foreach ($secciones as $sec){
+					echo "<option value='".$sec['nom_seccion']."'>".$sec['nom_seccion']."</option>";
+				}
+				echo "</select><br>";
+				?>
+				
+				<label>Selecciona la subsección donde quiere eliminar la pregunta:
+				<?php
+				$subsecciones=getTodasLasSubsecciones();
+				echo "<select id='subseccionesP'>";
+				foreach ($subsecciones as $sub){
+					echo "<option value='".$sub['nom_subseccion']."'>".$sub['nom_subseccion']."</option>";
+				}
+				echo "</select><br>";
+				?>
+
+				<p class ="submit">
+					<input type="button"id="button" value="Eliminar Pregunta de este cuestionario" onclick="deletePregunta()"><br><br>
+				</p>
+				
+			</div>
 
 
-</form>
 
 	<?php
 	//$seccion=getTodasLasSecciones();
