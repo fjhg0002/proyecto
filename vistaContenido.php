@@ -34,18 +34,111 @@
 			ocultarBloques();
 			document.getElementById("nuevaPregunta").style.display="block";
 		}
-		function verListado() {
+		function ocultaCuestionario() {
+            document.getElementById("cuestionario").style.display="none";
+        }
+		
+		function verCuestionario() {
+		alert( $("#nom_CuestB").val() );
+        $.post( "modelo.php"
+			   , { nom_CuestB: $("#nom_CuestB").val()
+			   , funcion: "recuperaPreguntas"}
+			   , function( data ) {
+			$('#ListadoPreguntas').html( data )
+			$("Lista").show()
 			document.getElementById("Lista").style.display="block";
+			//$("#nom_Cuest").attr( "disabled", "disabled");
+		});
 		}
-		function ocultarCuestionario() {
-			document.getElementById("Cuestionario").style.display="none";
-		}
-	
+		
+		function listadoSecciones() {
+            $.post( "modelo.php"
+				   ,{ nom_CuestB: $("#nom_CuestB").val()
+				   , funcion: "listadoSecciones" }
+				   , function( data ) {
+					var opciones=data.split(",");
+					$("#seccionesNSu").text("");
+					$("#seccionesNPr").text("");
+					$("#seccionesDSe").text("");
+					$("#seccionesDSu").text("");
+					$("#seccionesDPr").text("");
+					for( var i=0; i<opciones.length; ++i ){
+						$('#seccionesNSu').append( "<option value=\""+ opciones[i] +"\">" + opciones[i] +"</option>" );
+						$('#seccionesNPr').append( "<option value=\""+ opciones[i] +"\">" + opciones[i] +"</option>" );
+						$('#seccionesDSe').append( "<option value=\""+ opciones[i] +"\">" + opciones[i] +"</option>" );
+						$('#seccionesDSu').append( "<option value=\""+ opciones[i] +"\">" + opciones[i] +"</option>" );
+						$('#seccionesDPr').append( "<option value=\""+ opciones[i] +"\">" + opciones[i] +"</option>" );
+				   }
+				   });
+        }
+		
+		function listadoSubseccionesDSu() {
+			alert ("añadiendo" + $("#seccionesDSu").val());
+            $.post( "modelo.php"
+				   ,{ seccionesDSu: $("#seccionesDSu").val()
+				   , funcion: "listadoSubseccionesDSu" }
+				   , function( data ) {
+					alert(data);
+					var opciones=data.split(",");
+					$("#subseccionesDSu").text("");
+					//$('#subseccionesDSu').append( "<option value=\""+ 'ninguna' +"\">" + 'Selecciona una Subsección' +"</option>" );
+					for( var i=0; i<opciones.length; ++i ){
+						$('#subseccionesDSu').append( "<option value=\""+ opciones[i] +"\">" + opciones[i] +"</option>" );
+				   }
+				   });
+        }
+		
+		function listadoSubseccionesNPr() {
+			alert ("añadiendo" + $("#seccionesNPr").val());
+            $.post( "modelo.php"
+				   ,{ seccionesNPr: $("#seccionesNPr").val()
+				   , funcion: "listadoSubseccionesNPr" }
+				   , function( data ) {
+					alert(data);
+					var opciones2=data.split(",");
+					$("#subseccionesNPr").text("");
+					for( var i=0; i<opciones2.length; ++i ){
+						$('#subseccionesNPr').append( "<option value=\""+ opciones2[i] +"\">" + opciones2[i] +"</option>" );
+				   }
+				   });
+        }
+		
+		function listadoSubseccionesDPr() {
+			alert ("añadiendo" + $("#seccionesDPr").val());
+            $.post( "modelo.php"
+				   ,{ seccionesDPr: $("#seccionesDPr").val()
+				   , funcion: "listadoSubseccionesDPr" }
+				   , function( data ) {
+					alert(data);
+					var opciones2=data.split(",");
+					$("#subseccionesDPr").text("");
+					for( var i=0; i<opciones2.length; ++i ){
+						$('#subseccionesDPr').append( "<option value=\""+ opciones2[i] +"\">" + opciones2[i] +"</option>" );
+				   }
+				   });
+        }
+		
+		function listadoPreguntas() {
+			alert ("añadiendo" + $("#subseccionesDPr").val());
+            $.post( "modelo.php"
+				   ,{ subseccionesDPr: $("#subseccionesDPr").val()
+				   , funcion: "listadoPreguntas" }
+				   , function( data ) {
+					alert(data);
+					var opciones2=data.split(",");
+					$("#preguntas").text("");
+					for( var i=0; i<opciones2.length; ++i ){
+						$('#preguntas').append( "<option value=\""+ opciones2[i] +"\">" + opciones2[i] +"</option>" );
+				   }
+				   });
+        }
+		
 		function addCuestionario() {
 		alert( "adding" );
         $.post( "modelo.php"
 			   , { nom_Cuest: $("#nom_Cuest").val()
-			   , funcion: "añadirCuestionario" }
+			   , funcion: "añadirCuestionario"
+			   , function: ocultaCuestionario()}
 			   , function( data ) {
 			document.getElementById("Lista").style.display="block";
 			alert( "Recibido: "+data )
@@ -54,35 +147,35 @@
 		}
 	
 		function addSeccion() {
-		alert( "adding seccion "+$("#secciones").val() );
+		alert( "adding seccion "+$("#seccionesNSe").val() );
         $.post( "modelo.php"
-			   , { nom_Cuest: $("#nom_Cuest").val()
+			   , { nom_CuestB: $("#nom_CuestB").val()
 			   , nom_Sec: $("#nom_Sec").val()
-			   , secciones: $("#secciones").val()
+			   , seccionesNSe: $("#seccionesNSe").val()
 			   , funcion: "añadirSeccion" }
 			   , function( data ) {
-			alert( "Recibido: "+data +$("#secciones").val() );
+			alert( "Recibido: "+data +$("#seccionesNSe").val() );
 			//$("#nom_Sec").attr( "disabled", "disabled");
 		});
 		}
 		
 		function deleteSeccion() {
-		alert( "deleting seccion "+$("#secciones").val() );
+		alert( "deleting seccion "+$("#seccionesDSe").val() );
         $.post( "modelo.php"
-			   , { nom_Cuest: $("#nom_Cuest").val()
-			   , secciones: $("#secciones").val()
-			   , funcion: "eliminaSeccion" }
+			   , { seccionesDSe: $("#seccionesDSe").val()
+			   , funcion: "eliminarSeccion" }
 			   , function( data ) {
-			alert( "Recibido: "+data +$("#secciones").val() );
+			alert( "Recibido: "+data + " Seccion: " + $("#seccionesDSe").val() );
+			
 			//$("#nom_Sec").attr( "disabled", "disabled");
 		});
 		}
 	
 		function addSubseccion() {
-		alert("adding subseccion" + $("#secciones2").val() + $("#listaSubsecciones").val());
+		alert("adding subseccion" + $("#seccionesNSu").val() + $("#subseccionesNSu").val());
 		$.post("modelo.php"
-			   , { secciones2: $("#secciones2").val()
-			   , listaSubsecciones: $("#listaSubsecciones").val()
+			   , { seccionesNSu: $("#seccionesNSu").val()
+			   , subseccionesNSu: $("#subseccionesNSu").val()
 			   , nom_Sub: $("#nom_Sub").val()
 			   , funcion: "añadirSubseccion" }
 			   , function( data ) {
@@ -95,26 +188,36 @@
 		$.post("modelo.php"
 			   , { secciones2: $("#secciones2").val()
 			   , listaSubsecciones: $("#listaSubsecciones").val()
-			   , funcion: "eliminaSubseccion" }
+			   , funcion: "eliminarSubseccion" }
 			   , function( data ) {
 			alert( "Recibido: "+data)
 		});
 		}
 	
 		function addPregunta() {
-		alert("adding pregunta" + $("#tit_Pregunta").val()+ $("#seccionesP").val() + $("#subseccionesP").val());
+		alert("adding pregunta" + $("#tit_Pregunta").val()+ $("#seccionesNPr").val() + $("#subseccionesNPr").val());
 		$.post("modelo.php"
 			   , { tit_Pregunta: $("#tit_Pregunta").val()
-			   , seccionesP: $("#seccionesP").val()
-			   , subseccionesP: $("#subseccionesP").val()
+			   , seccionesNPr: $("#seccionesNPr").val()
+			   , subseccionesNPr: $("#subseccionesNPr").val()
 			   , TiposRespuestas: $("#TiposRespuestas").val()
-			   //, opcion1: $("#opcion1").val()
-			   //, opcion2: $("#opcion2").val()
-			   //, opcion3: $("#opcion3").val()
-			   //, opcion4: $("#opcion4").val()
 			   , funcion: "añadirPregunta" }
 			   , function( data ) {
-			alert( "Recibido: "+data)
+			alert( "Pregunta añadida: "+data)
+		});
+		}
+		
+		function addRespuesta() {
+		alert("adding respuesta" + $("#tit_Pregunta").val());
+		$.post("modelo.php"
+			   , { tit_Pregunta: $("#tit_Pregunta").val()
+			   , opcion1: $("#opcion1").val()
+			   , opcion2: $("#opcion2").val()
+			   , opcion3: $("#opcion3").val()
+			   , opcion4: $("#opcion4").val()
+			   , funcion: "añadirRespuesta" }
+			   , function( data ) {
+			alert( "Respuestas Añadidas: "+data)
 		});
 		}
 		
@@ -123,7 +226,8 @@
 		$.post("modelo.php"
 			   , { seccionesP: $("#seccionesP").val()
 			   , subseccionesP: $("#subseccionesP").val()
-			   , funcion: "eliminaPregunta" }
+			   , preguntas: $("#preguntas").val()
+			   , funcion: "eliminarPregunta" }
 			   , function( data ) {
 			alert( "Recibido: "+data)
 		});
@@ -134,15 +238,12 @@
                                   autoOpen: false,
                                   modal: true,
                                   buttons: {
-                                  "Aceptar": function dialogSeccion() {
-                                  $(this).dialog("close");
-                                  },
                                   "Cerrar": function dialogSeccion() {
                                   $(this).dialog("close");
                                   }
                                   }
                                   });
-              $("#button1")
+              $("#buttonDialogo1")
               .button()
               .click(function dialogSeccion() {
                      $("#nuevaSeccion").dialog("option", "width", 600);
@@ -157,15 +258,12 @@
                                   autoOpen: false,
                                   modal: true,
                                   buttons: {
-                                  "Aceptar": function dialogDelSeccion() {
-                                  $(this).dialog("close");
-                                  },
                                   "Cerrar": function dialogDelSeccion() {
                                   $(this).dialog("close");
                                   }
                                   }
                                   });
-              $("#button2")
+              $("#buttonDialogo2")
               .button()
               .click(function dialogDelSeccion() {
                      $("#eliminaSeccion").dialog("option", "width", 600);
@@ -180,15 +278,12 @@
                                   autoOpen: false,
                                   modal: true,
                                   buttons: {
-                                  "Aceptar": function dialogSubseccion() {
-                                  $(this).dialog("close");
-                                  },
                                   "Cerrar": function dialogSubseccion() {
                                   $(this).dialog("close");
                                   }
                                   }
                                   });
-              $("#button3")
+              $("#buttonDialogo3")
               .button()
               .click(function dialogSubseccion() {
                      $("#nuevaSubseccion").dialog("option", "width", 600);
@@ -203,15 +298,12 @@
                                   autoOpen: false,
                                   modal: true,
                                   buttons: {
-                                  "Aceptar": function dialogDelSubseccion() {
-                                  $(this).dialog("close");
-                                  },
                                   "Cerrar": function dialogDelSubseccion() {
                                   $(this).dialog("close");
                                   }
                                   }
                                   });
-              $("#button4")
+              $("#buttonDialogo4")
               .button()
               .click(function dialogSubseccion() {
                      $("#eliminaSubseccion").dialog("option", "width", 600);
@@ -226,19 +318,16 @@
                                   autoOpen: false,
                                   modal: true,
                                   buttons: {
-                                  "Aceptar": function dialogPregunta() {
-                                  $(this).dialog("close");
-                                  },
                                   "Cerrar": function dialogPregunta() {
                                   $(this).dialog("close");
                                   }
                                   }
                                   });
-              $("#button5")
+              $("#buttonDialogo5")
               .button()
               .click(function dialogPregunta() {
                      $("#nuevaPregunta").dialog("option", "width", 600);
-                     $("#nuevaPregunta").dialog("option", "height", 775);
+                     $("#nuevaPregunta").dialog("option", "height", 700);
                      $("#nuevaPregunta").dialog("option", "resizable", false);
                      $("#nuevaPregunta").dialog("open");
                      });
@@ -249,24 +338,22 @@
                                   autoOpen: false,
                                   modal: true,
                                   buttons: {
-                                  "Aceptar": function dialogDelPregunta() {
-                                  $(this).dialog("close");
-                                  },
                                   "Cerrar": function dialogDelPregunta() {
                                   $(this).dialog("close");
                                   }
                                   }
                                   });
-              $("#button6")
+              $("#buttonDialogo6")
               .button()
               .click(function dialogDelPregunta() {
                      $("#eliminaPregunta").dialog("option", "width", 600);
-                     $("#eliminaPregunta").dialog("option", "height", 775);
+                     $("#eliminaPregunta").dialog("option", "height", 400);
                      $("#eliminaPregunta").dialog("option", "resizable", false);
                      $("#eliminaPregunta").dialog("open");
                      });
-		});	
-		</script>
+		});
+		
+</script>
 		
 	</head>
 	

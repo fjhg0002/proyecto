@@ -92,205 +92,144 @@ include("vistaContenido.php")
 			<div id="cuestionario" style="display: block">
 			<h2>Nuevo Cuestionario</h2>
 			<label>Nombre Cuestionario:<br />
-			<input type="text" id="nom_Cuest" class value=""><br><br>
+			<input type="text" id="nom_CuestN" class value=""><br><br>
 
 			<p class ="submit">
 				<input type="button" id="button" class="button" value="Añadir Cuestionario"
-					   onclick="addCuestionario(),verListado(),ocultarCuestionario()"><br><br>
+					   onclick="addCuestionario(),verListado()"><br><br>
+			</p>
+			
+			</div>
+			
+			<div id="buscarCuestionario" style="display: block">
+			<h2 id="nuevo">Buscar Cuestionario</h2>
+			<label>Escribe el cuestionario que desea buscar:<br />
+
+			<input type="text" id="nom_CuestB" class value=""><br><br>
+				
+				<?php
+				/*$cuestionarios=getTodosLosCuestionarios();
+				echo "<select id='nom_CuestB'>";
+				echo "<option value='ninguna'>Selecciona un Cuestionario</option>";
+				foreach ($cuestionarios as $cuest){
+					echo "<option value='".$cuest['nom_Cuest']."'>".$cuest['nom_cuest']."</option>";
+				}
+				echo "</select><br>";*/
+				?>			
+
+			<p class ="submit">
+				<input type="button" id="button" class="button" value="Añadir Cuestionario"
+					   onclick="verCuestionario(),listadoSecciones(),verListado()"><br><br>
 			</p>
 			
 			</div>
 					
-			<div id="Lista" style=display:none>
-			<table>
-			<tr><td>
-			
-			<div id="ListadoPreguntas" >
-				<?php
-				$consulta_Seccion='select * from seccion';
-				$resultado_consulta_Seccion=mysql_query($consulta_Seccion);
-				$fila1=mysql_fetch_array($resultado_consulta_Seccion);
-				
-				$consulta_Subseccion='select * from subseccion';
-				$resultado_consulta_Subseccion=mysql_query($consulta_Subseccion);
-				$fila2=mysql_fetch_array($resultado_consulta_Subseccion);
-				
-				$consulta_Pregunta='select * from pregunta';
-				$resultado_consulta_Pregunta=mysql_query($consulta_Pregunta);
-				$fila3=mysql_fetch_array($resultado_consulta_Pregunta);
-				
-				echo "<table border=1 cellspacing=0 cellpadding=2table>";
-				while($fila1=mysql_fetch_array($resultado_consulta_Seccion)){
-					echo "<tr><td bgcolor='#A4A4A4'>";
-					echo $fila1["nom_seccion"];
-					echo "</tr></td>";
-					while($fila2=mysql_fetch_array($resultado_consulta_Subseccion)){
-						echo "<tr><td bgcolor='#BDBDBD'>";
-						if($fila1["id_seccion"] == $fila2["id_seccion"]){
-							echo $fila2["nom_subseccion"];
-						}
-						echo "</tr></td>";
-						while($fila3=mysql_fetch_array($resultado_consulta_Pregunta)){
-							echo "<tr><td bgcolor='#E6E6E6'>";
-							if($fila2["id_subseccion"] == $fila3["id_Sub"]){
-								echo $fila3["enunciado"];
-							}	
-							echo "</tr></td>";
-						}	
-					}
-				}
-				echo "</table>"
-				?>
-			</div>
-			</td>
-			
-			<td>
+			<div id="Lista" style="display:none">
 			
 			<div id="botonesListaPreguntas">
 			<table>
-			<tr> <td> <p class ="submit"> <input type="button" id="button1" class="button" value="Nueva Seccion" onclick="nuevaSeccion()"> </p> </tr> </td>
-			<tr> <td> <p class ="submit"> <input type="button" id="button2" class="button" value="Eliminar Seccion" onclick="eliminaSeccion()"> </p> </tr> </td>
-			<tr> <td> <p class ="submit"> <input type="button" id="button3" class="button" value="Nueva Subsección" onclick="nuevaSubseccion()"> </p> </tr> </td>
-			<tr> <td> <p class ="submit"> <input type="button" id="button4" class="button" value="Eliminar Subsección" onclick="eliminaSubseccion()"> </p> </tr> </td>
-			<tr> <td> <p class ="submit"><input type="button" id="button5" class="button" value="Nueva Pregunta" onclick="nuevaPregunta()"> </p> </tr> </td>
-			<tr> <td> <p class ="submit"><input type="button" id="button6" class="button" value="Eliminar Pregunta"onclick="eliminaPregunta()"> </p> </tr> </td>
-			
+			<tr>
+				<td> <p class ="submit"> <input type="button" id="buttonDialogo1" class="button" value="Nueva Seccion" onclick="nuevaSeccion()"> </p></td>
+				<td> <p class ="submit"> <input type="button" id="buttonDialogo3" class="button" value="Nueva Subsección" onclick="nuevaSubseccion()"> </p></td>
+				<td> <p class ="submit"><input type="button" id="buttonDialogo5" class="button" value="Nueva Pregunta" onclick="nuevaPregunta()"> </p></td>			
+			</tr>
+
+			<tr>
+				<td> <p class ="submit"> <input type="button" id="buttonDialogo2" class="button" value="Eliminar Seccion" onclick="eliminaSeccion()"> </p> </td>
+				<td> <p class ="submit"> <input type="button" id="buttonDialogo4" class="button" value="Eliminar Subsección" onclick="eliminaSubseccion()"> </p></td>			
+				<td> <p class ="submit"><input type="button" id="buttonDialogo6" class="button" value="Eliminar Pregunta"onclick="eliminaPregunta()"> </p></td>
+			</tr>
 			</table>
 			</div>
+			
+			<div id="ListadoPreguntas" >
+			</div>
+
+
 			</div>
 			
-			</td></tr>
-			</table>			
+			
 			
 			<div id="nuevaSeccion" title="Nueva Sección" style="display:none">
-				
-				<label>Selecciona una sección de las siguientes:
+				<label>Selecciona una sección de las siguientes:<br>
 				<?php
 				$secciones=getTodasLasSecciones();
-				echo "<select id='secciones'>";
+				echo "<select id='seccionesNSe'>";
 				echo "<option value='ninguna'>Selecciona una Sección</option>";
 				foreach ($secciones as $sec){
 					echo "<option value='".$sec['nom_seccion']."'>".$sec['nom_seccion']."</option>";
 				}
 				echo "<option value='otra'>otra</option>";
 				echo "</select><br>";
-				?>			
-			
+				?>
+				<label>O selecciona otra, y escribe una nueva aquí:<br>
+		
 				<input type="text" name="nom_Sec" id="nom_Sec"  size="20" value=""><br><br>
 				<p class ="submit">
-					<input type="button" id="button" classs="button" value="Añadir Sección a este cuestionario"
+					<input type="button" id="buttonOK" classs="button" value="Añadir Sección a este cuestionario"
 						   onclick="addSeccion()"><br><br>
 				</p>
 			</div>
 			
 			<div id="eliminaSeccion" title="Eliminar Sección" style="display:none">
-				
-				<label>Selecciona una sección de las siguientes:
-				<?php
-				$secciones=getTodasLasSecciones();
-				echo "<select id='secciones'>";
-				echo "<option value='ninguna'>Selecciona una Sección</option>";
-				foreach ($secciones as $sec){
-					echo "<option value='".$sec['nom_seccion']."'>".$sec['nom_seccion']."</option>";
-				}
-				echo "</select><br>";
-				?>			
+				<label>Selecciona la sección que quieres eliminar:<br>
+				<?php echo "<select id='seccionesDSe'> </select><br><br>"?>			
 			
-				<p class ="submit">
-					<input type="button" id="button" classs="button" value="Eliminar esta Sección de este cuestionario"
-						   onclick="deleteSeccion()"><br><br>
+				<p class ='submit'>
+				<input type='button' id='buttonOK' classs='button' value='Eliminar esta Sección de este cuestionario' onclick='deleteSeccion()'><br><br>
 				</p>
 			</div>
 			
 			<div id="nuevaSubseccion" title="Nueva Subsección" style="display: none">
 				
-				<label>Elige la Sección donde quieres añadir la subsección:<br><br>
-				<?php
-				$secciones=getTodasLasSecciones();
-				echo "<select id='secciones2'>";
-				echo "<option value='ninguna'>Selecciona una Sección</option>";
-				foreach ($secciones as $sec){
-					echo "<option value='".$sec['nom_seccion']."'>".$sec['nom_seccion']."</option>";
-				}
-				echo "</select><br>";
-				?>			
-
+				<label>Elige la Sección donde quieres añadir la subsección:<br>
+				<?php echo "<select id='seccionesNSu'> </select><br>"; ?>			
 				
-				<label>Selecciona la subseccion que quieres añadir o escriba una nueva:<br><br>
+				<label>Selecciona una subsección de las siguientes:<br>
 				<?php
 				$subsecciones=getTodasLasSubsecciones();
-				echo "<select id='listaSubsecciones'>";
+				echo "<select id='subseccionesNSu'>";
 				echo "<option value='ninguna'>Selecciona una Subsección</option>";
-				foreach ($subsecciones as $subsec){
-					echo "<option value='".$subsec["nom_subseccion"]."'>".$subsec["nom_subseccion"]."</option>";
+				foreach ($subsecciones as $sub){
+					echo "<option value='".$sub['nom_subseccion']."'>".$sub['nom_subseccion']."</option>";
 				}
 				echo "<option value='otra'>otra</option>";
 				echo "</select><br>";
-				
 				?>
 				
+				<label>O selecciona otra, y escribe una nueva aquí:<br>
+			
 				<input type="text" id="nom_Sub" class value=""><br><br>
 				<p class ="submit">
-					<input type="button"id="button" value="Añadir Subsección a este cuestionario" onclick="addSubseccion()"><br><br>
+					<input type="button"id="buttonOK" value="Añadir Subsección a este cuestionario" onclick="addSubseccion()"><br><br>
 				</p>
-
 			</div>
 			
 			<div id="eliminaSubseccion" title="Eliminar Subsección" style="display: none">
 				
-				<label>Elige la Sección donde quieres eliminar la subsección:<br><br>
-				<?php
-				$secciones=getTodasLasSecciones();
-				echo "<select id='secciones2'>";
-				echo "<option value='ninguna'>Selecciona una Sección</option>";
-				foreach ($secciones as $sec){
-					echo "<option value='".$sec['nom_seccion']."'>".$sec['nom_seccion']."</option>";
-				}
-				echo "</select><br>";
-				?>			
+				<label>Elige la Sección donde quieres eliminar la subsección:<br>
+				<?php echo "<select id='seccionesDSu' onchange='listadoSubseccionesDSu()'> </select><br>";?>			
 
 				
-				<label>Selecciona la subseccion que quieres eliminar:<br><br>
-				<?php
-				$subsecciones=getTodasLasSubsecciones();
-				echo "<select id='listaSubsecciones'>";
-				echo "<option value='ninguna'>Selecciona una Subsección</option>";
-				foreach ($subsecciones as $subsec){
-					echo "<option value='".$subsec["nom_subseccion"]."'>".$subsec["nom_subseccion"]."</option>";
-				}
-				echo "<option value='otra'>otra</option>";
-				echo "</select><br>";
+				<label>Selecciona la subseccion que quieres eliminar:<br>
+				<?php echo "<select id='subseccionesDSu'> </select><br><br>";
 				
 				?>
 				<p class ="submit">
-					<input type="button"id="button" value="Eliminar Subsección de este cuestionario" onclick="deleteSubseccion()"><br><br>
+					<input type="button"id="buttonOK" value="Eliminar Subsección de este cuestionario" onclick="deleteSubseccion()"><br><br>
 				</p>
 
 			</div>
 			
 			<div id="nuevaPregunta" title="Nueva Pregunta" style="display: none">
 				<label>Título pregunta:
-				<input type="text" id="tit_Pregunta" class value=""><br><br>
+				<input type="text" id="tit_Pregunta" class value=""><br>
 				
 				<label>Selecciona la sección donde quiere insertar la pregunta:
-				<?php
-				$secciones=getTodasLasSecciones();
-				echo "<select id='seccionesP'>";
-				foreach ($secciones as $sec){
-					echo "<option value='".$sec['nom_seccion']."'>".$sec['nom_seccion']."</option>";
-				}
-				echo "</select><br>";
-				?>
+				<?php echo "<select id='seccionesNPr' onchange='listadoSubseccionesNPr()'> </select><br>" ?>
 				
-				<label>Selecciona la subsección donde quiere insertar la pregunta:
-				<?php
-				$subsecciones=getTodasLasSubsecciones();
-				echo "<select id='subseccionesP'>";
-				foreach ($subsecciones as $sub){
-					echo "<option value='".$sub['nom_subseccion']."'>".$sub['nom_subseccion']."</option>";
-				}
-				echo "</select><br>";
-				?>
+				<label>Selecciona la subseccion:<br>
+				<?php echo "<select id='subseccionesNPr'> </select><br>";?>
 
 				<label>Tipo de respuesta:
 				<select id='TiposRespuestas'>
@@ -307,41 +246,27 @@ include("vistaContenido.php")
 				<label>Opcion 3
 				<input type="text" id="opcion3" class value=""><br>
 				<label>Opcion 4
-				<input type="text" id="opcion4" class value="">
+				<input type="text" id="opcion4" class value=""><br><br>
 
 				<p class ="submit">
-					<input type="button"id="button" value="Añadir Pregunta a este cuestionario" onclick="addPregunta()"><br><br>
+					<input type="button"id="buttonOK" value="Añadir Pregunta a este cuestionario" onclick="addPregunta(),addRespuesta()"><br><br>
 				</p>
-
-				
 			</div>
 
 			<div id="eliminaPregunta" title="Eliminar Pregunta" style="display: none">
 				
 				<label>Selecciona la sección donde quiere eliminar la pregunta:
-				<?php
-				$secciones=getTodasLasSecciones();
-				echo "<select id='seccionesP'>";
-				foreach ($secciones as $sec){
-					echo "<option value='".$sec['nom_seccion']."'>".$sec['nom_seccion']."</option>";
-				}
-				echo "</select><br>";
-				?>
+				<?php echo "<select id='seccionesDPr' onchange='listadoSubseccionesDPr()'> </select><br>" ?>
 				
-				<label>Selecciona la subsección donde quiere eliminar la pregunta:
-				<?php
-				$subsecciones=getTodasLasSubsecciones();
-				echo "<select id='subseccionesP'>";
-				foreach ($subsecciones as $sub){
-					echo "<option value='".$sub['nom_subseccion']."'>".$sub['nom_subseccion']."</option>";
-				}
-				echo "</select><br>";
-				?>
+				<label>Selecciona la subseccion:<br>
+				<?php echo "<select id='subseccionesDPr' onchange='listadoPreguntas()'> </select><br>"?>
+				
+				<label>Selecciona la pregunta:<br>
+				<?php echo "<select id='preguntas'> </select><br>"?>
 
 				<p class ="submit">
-					<input type="button"id="button" value="Eliminar Pregunta de este cuestionario" onclick="deletePregunta()"><br><br>
-				</p>
-				
+					<input type="button"id="buttonOK" value="Eliminar Pregunta de este cuestionario" onclick="deletePregunta()"><br><br>
+				</p>	
 			</div>
 
 
