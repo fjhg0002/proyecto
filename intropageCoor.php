@@ -23,7 +23,7 @@ include("vistaContenido.php")
 	
 </script>
 
-
+<div id="contenedor">
 <div id="cabecera" >
 	<h1>Bienvenido a Down Progress, sistema de seguimiento.</h1>
 	<h3>¿Que tal está <span><?php echo $_SESSION['session_username'];?>! </span>?
@@ -42,9 +42,8 @@ include("vistaContenido.php")
 <div id="contenido">
 	<?php if (!empty($message)) {echo "<p class=\"error\">" . "Mensaje: ". $message . "</p>";} ?>
 
-	<div>
 		<div id="nuevoUsuario" style="display: none;">
-			<h1>Registro de Usuarios</h1>
+			<h2>Registro de Usuarios</h2>
 			<form name="registerform" id="registerform" action="intropageCoor.php" method="post">
 				<label for="user_login">Nombre:<br />
 				<input type="text" name="name" id="name" class value=""><br><br>
@@ -77,8 +76,32 @@ include("vistaContenido.php")
 						</p>
 			</form>
 		</div>
+		
+		<div id="buscarUsuario" style="display: none">
+			<h2 id="nuevo">Buscar Usuario</h2>
+			<label>Escribe el usuario que desea buscar:<br />
+				
+				<?php
+				$usuarios=getTodosLosUsuarios();
+				echo "<select id='usuario'>";
+				echo "<option value='ninguna'>Selecciona un Usuario</option>";
+				foreach ($usuarios as $usu){
+					echo "<option value='".$usu['username']."'>".$usu['username']."</option>";
+				}
+				echo "</select><br>";
+				?>			
 
-	</div>
+			<p class ="submit">
+				<input type="button" id="button" class="button" value="Modificar Usuario"
+					   onclick="modificarUsuario()">
+				<input type="button" id="button" class="button" value="Eliminar Usuario"
+					   onclick="eliminarUsuario()"><br><br>
+			</p>
+			
+		</div>
+		
+		<div id="DatosUsuario" style="display: none"></div>
+
 
 	<?php
 	require_once("modelo.php");
@@ -96,7 +119,7 @@ include("vistaContenido.php")
 
 			<p class ="submit">
 				<input type="button" id="button" class="button" value="Añadir Cuestionario"
-					   onclick="addCuestionario(),verListado()"><br><br>
+					   onclick="addCuestionario()"><br><br>
 			</p>
 			
 			</div>
@@ -105,21 +128,21 @@ include("vistaContenido.php")
 			<h2 id="nuevo">Buscar Cuestionario</h2>
 			<label>Escribe el cuestionario que desea buscar:<br />
 
-			<input type="text" id="nom_CuestB" class value=""><br><br>
+			<!--input type="text" id="nom_CuestB" class value=""><br><br-->
 				
 				<?php
-				/*$cuestionarios=getTodosLosCuestionarios();
-				echo "<select id='nom_CuestB'>";
+				$cuestionarios=getTodosLosCuestionarios();
+				echo "<select id='nom_CuestB' name='nom_CuestB'>";
 				echo "<option value='ninguna'>Selecciona un Cuestionario</option>";
 				foreach ($cuestionarios as $cuest){
-					echo "<option value='".$cuest['nom_Cuest']."'>".$cuest['nom_cuest']."</option>";
+					echo "<option value='".$cuest['nom_cuest']."'>".$cuest['nom_cuest']."</option>";
 				}
-				echo "</select><br>";*/
+				echo "</select><br>";
 				?>			
 
 			<p class ="submit">
-				<input type="button" id="button" class="button" value="Añadir Cuestionario"
-					   onclick="verCuestionario(),listadoSecciones(),verListado()"><br><br>
+				<input type="button" id="button" class="button" value="Buscar Cuestionario"
+					   onclick="verCuestionario();listadoSecciones()"><br><br>
 			</p>
 			
 			</div>
@@ -131,19 +154,18 @@ include("vistaContenido.php")
 			<tr>
 				<td> <p class ="submit"> <input type="button" id="buttonDialogo1" class="button" value="Nueva Seccion" onclick="nuevaSeccion()"> </p></td>
 				<td> <p class ="submit"> <input type="button" id="buttonDialogo3" class="button" value="Nueva Subsección" onclick="nuevaSubseccion()"> </p></td>
-				<td> <p class ="submit"><input type="button" id="buttonDialogo5" class="button" value="Nueva Pregunta" onclick="nuevaPregunta()"> </p></td>			
+				<td> <p class ="submit"> <input type="button" id="buttonDialogo5" class="button" value="Nueva Pregunta" onclick="nuevaPregunta()"> </p></td>			
 			</tr>
 
 			<tr>
 				<td> <p class ="submit"> <input type="button" id="buttonDialogo2" class="button" value="Eliminar Seccion" onclick="eliminaSeccion()"> </p> </td>
 				<td> <p class ="submit"> <input type="button" id="buttonDialogo4" class="button" value="Eliminar Subsección" onclick="eliminaSubseccion()"> </p></td>			
-				<td> <p class ="submit"><input type="button" id="buttonDialogo6" class="button" value="Eliminar Pregunta"onclick="eliminaPregunta()"> </p></td>
+				<td> <p class ="submit"> <input type="button" id="buttonDialogo6" class="button" value="Eliminar Pregunta"onclick="eliminaPregunta()"> </p></td>
 			</tr>
 			</table>
 			</div>
-			
-			<div id="ListadoPreguntas" >
-			</div>
+
+			<div id="ListadoPreguntas" STYLE=" height: 300px; width: 600px; overflow: auto;"></div>
 
 
 			</div>
@@ -249,7 +271,7 @@ include("vistaContenido.php")
 				<input type="text" id="opcion4" class value=""><br><br>
 
 				<p class ="submit">
-					<input type="button"id="buttonOK" value="Añadir Pregunta a este cuestionario" onclick="addPregunta(),addRespuesta()"><br><br>
+					<input type="button"id="buttonOK" value="Añadir Pregunta a este cuestionario" onclick="addPregunta();addRespuesta()"><br><br>
 				</p>
 			</div>
 
@@ -286,6 +308,7 @@ include("vistaContenido.php")
 
 
 
+</div>
 </div>
 
 <?php include("includes/footer.php"); ?>

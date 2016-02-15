@@ -5,11 +5,17 @@
 				document.getElementById("nuevoUsuario").style.display="none";
 				document.getElementById("nuevoCuestionario").style.display="none";
 				document.getElementById("buscarCuestionario").style.display="none";
+				document.getElementById("buscarUsuario").style.display="none";
 				document.getElementById("Lista").style.display="none";
 			}
 			function nuevoUsuario() {
 				ocultarTodos();
 				document.getElementById("nuevoUsuario").style.display="block";
+			}
+			
+			function buscarUsuario() {
+				ocultarTodos();
+				document.getElementById("buscarUsuario").style.display="block";
 			}
 
 			function nuevoCuestionario() {

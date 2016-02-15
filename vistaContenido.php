@@ -36,13 +36,32 @@
 		}
 		function ocultaCuestionario() {
             document.getElementById("cuestionario").style.display="none";
+			document.getElementById("buscarCuestionario").style.display="none";
+        }
+		function ocultaBuscarUsuario() {
+            document.getElementById("buscarUsuario").style.display="none";
         }
 		
+		function modificarUsuario() {
+		alert( $("#usuario").val() );
+        $.post( "modelo.php"
+			   , { usuario: $("#usuario").val()
+			   , funcion: "buscarDatosUsuario"
+			   , function: ocultaBuscarUsuario()}
+			   , function( data ) {
+			$('#DatosUsuario').html( data )
+			$("DatosUsuario").show()
+			document.getElementById("DatosUsuario").style.display="block";
+			//$("#nom_Cuest").attr( "disabled", "disabled");
+		});
+		}
+		
 		function verCuestionario() {
-		alert( $("#nom_CuestB").val() );
+		alert( "el cuestionario es "+$("#nom_CuestB").val() );
         $.post( "modelo.php"
 			   , { nom_CuestB: $("#nom_CuestB").val()
-			   , funcion: "recuperaPreguntas"}
+			   , funcion: "recuperaPreguntas"
+			   , function: ocultaCuestionario()}
 			   , function( data ) {
 			$('#ListadoPreguntas').html( data )
 			$("Lista").show()
@@ -73,7 +92,7 @@
         }
 		
 		function listadoSubseccionesDSu() {
-			alert ("añadiendo" + $("#seccionesDSu").val());
+			alert ("Bucando subsecciones de " + $("#seccionesDSu").val());
             $.post( "modelo.php"
 				   ,{ seccionesDSu: $("#seccionesDSu").val()
 				   , funcion: "listadoSubseccionesDSu" }
@@ -97,6 +116,7 @@
 					alert(data);
 					var opciones2=data.split(",");
 					$("#subseccionesNPr").text("");
+					$('#subseccionesNPr').append( "<option value=\"Ninguna\">Selecciona una subsección</option>" );
 					for( var i=0; i<opciones2.length; ++i ){
 						$('#subseccionesNPr').append( "<option value=\""+ opciones2[i] +"\">" + opciones2[i] +"</option>" );
 				   }
@@ -112,6 +132,7 @@
 					alert(data);
 					var opciones2=data.split(",");
 					$("#subseccionesDPr").text("");
+					$('#subseccionesDPr').append( "<option value=\"Ninguna\">Selecciona una subsección</option>" );
 					for( var i=0; i<opciones2.length; ++i ){
 						$('#subseccionesDPr').append( "<option value=\""+ opciones2[i] +"\">" + opciones2[i] +"</option>" );
 				   }
@@ -208,7 +229,7 @@
 		}
 		
 		function addRespuesta() {
-		alert("adding respuesta" + $("#tit_Pregunta").val());
+		alert("adding respuesta " + $("#tit_Pregunta").val());
 		$.post("modelo.php"
 			   , { tit_Pregunta: $("#tit_Pregunta").val()
 			   , opcion1: $("#opcion1").val()
@@ -352,13 +373,14 @@
                      $("#eliminaPregunta").dialog("open");
                      });
 		});
-		
+
 </script>
 		
 	</head>
 	
 	<body>
-		
+		<img src="http://localhost/downprogress/proyecto/img/logo.jpg" style="float:left" margin="10px" width="240px" height="120px" alt="descripcion de la imagen">
+
 		
 
 	</body>

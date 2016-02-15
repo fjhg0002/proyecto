@@ -158,10 +158,10 @@ function recuperaPreguntas(){
 				$resultado_consulta_Seccion=mysql_query($consulta_Seccion);
 				
 				$mensaje = "";
-				$mensaje .= "<table border=1 cellspacing=0 cellpadding=2table>";
-				$mensaje .= "<tr><td>Cuestionario</tr></td>";
+				$mensaje .= "<table id='tablaSecciones' border=1 cellspacing=0 cellpadding=2table width=600px>";
+				$mensaje .= "<tr><td>Cuestionario del Usuario $cuestionarioNuevo</tr></td>";
 				while($fila1=mysql_fetch_array($resultado_consulta_Seccion)){
-					$mensaje .= "<tr><td bgcolor='#A4A4A4'>";
+					$mensaje .= "<tr><td bgcolor='#B45F04'>";
 					$mensaje .= "SECCION: ".$fila1["nom_seccion"];
 					$mensaje .= "</tr></td>";
 					$id_seccion=$fila1["id_seccion"];
@@ -169,7 +169,7 @@ function recuperaPreguntas(){
 					$resultado_consulta_Subseccion=mysql_query($consulta_Subseccion);				
 
 					while($fila2=mysql_fetch_array($resultado_consulta_Subseccion)){
-						$mensaje .= "<tr><td bgcolor='#BDBDBD'>";
+						$mensaje .= "<tr><td bgcolor='#FF8000'>";
 						$mensaje .= "SUBSECCION: ".$fila2["nom_subseccion"];
 						$mensaje .= "</tr></td>";
 						
@@ -177,7 +177,7 @@ function recuperaPreguntas(){
 						$consulta_Pregunta="select * from pregunta where id_Sub='$id_subseccion'";
 						$resultado_consulta_Pregunta=mysql_query($consulta_Pregunta);
 						while($fila3=mysql_fetch_array($resultado_consulta_Pregunta)){
-							$mensaje .= "<tr><td bgcolor='#E6E6E6'>";
+							$mensaje .= "<tr><td bgcolor='#FF9F3F'>";
 							$mensaje .= $fila3["enunciado"];
 							$mensaje .= "</tr></td>";
 						}	
@@ -259,6 +259,52 @@ if(!empty($_POST['nom_Cuest'])){
 	return $messageCuest;
 }
 
+function buscarDatosUsuario(){
+				$usuario=$_POST['usuario'];
+				$consulta_Usuario="select * FROM usuario where username='$usuario'";
+				$resultado_consulta_Usu=mysql_query($consulta_Usuario);
+				$fila=mysql_fetch_array($resultado_consulta_Usu);
+				$id_usu=$fila["id"];
+				$name_usu=$fila["name"];
+				$last_name_usu=$fila["last_name"];
+				$type_usu=$fila["type"];
+				$email_usu=$fila["email"];
+				$username_usu=$fila["username"];
+				$password_usu=$fila["password"];
+				
+				$consulta_Seccion="select * from seccion where id_cuest='$numCuest'";
+				$resultado_consulta_Seccion=mysql_query($consulta_Seccion);
+				
+				$mensaje = "";
+				$mensaje .= "<table id='tablaSecciones' border=1 cellspacing=0 cellpadding=2table width=600px>";
+				$mensaje .= "<tr><td>Cuestionario</tr></td>";
+				while($fila1=mysql_fetch_array($resultado_consulta_Seccion)){
+					$mensaje .= "<tr><td bgcolor='#B45F04'>";
+					$mensaje .= "SECCION: ".$fila1["nom_seccion"];
+					$mensaje .= "</tr></td>";
+					$id_seccion=$fila1["id_seccion"];
+					$consulta_Subseccion="select * from subseccion where id_seccion='$id_seccion'";
+					$resultado_consulta_Subseccion=mysql_query($consulta_Subseccion);				
+
+					while($fila2=mysql_fetch_array($resultado_consulta_Subseccion)){
+						$mensaje .= "<tr><td bgcolor='#FF8000'>";
+						$mensaje .= "SUBSECCION: ".$fila2["nom_subseccion"];
+						$mensaje .= "</tr></td>";
+						
+						$id_subseccion=$fila2["id_subseccion"];
+						$consulta_Pregunta="select * from pregunta where id_Sub='$id_subseccion'";
+						$resultado_consulta_Pregunta=mysql_query($consulta_Pregunta);
+						while($fila3=mysql_fetch_array($resultado_consulta_Pregunta)){
+							$mensaje .= "<tr><td bgcolor='#FF9F3F'>";
+							$mensaje .= $fila3["enunciado"];
+							$mensaje .= "</tr></td>";
+						}	
+					}
+				}
+				$mensaje .= "</table>";
+				return $mensaje;
+}
+
 
 function añadirSeccion(){
 	if( !empty($_POST['nom_CuestB']) && (!empty($_POST['nom_Sec']) || !empty($_POST['seccionesNSe']))){
@@ -285,26 +331,37 @@ function añadirSeccion(){
 function eliminarSeccion(){
 		if( !empty($_POST['seccionesDSe'])){
 	
+		$toRet="";
 		$seccionesDSe = $_POST['seccionesDSe'];
- 		
-		$consulta=mysql_query("SELECT id_seccion FROM seccion WHERE nom_seccion='$seccionesDSe'");
+ 		$sqlA="SELECT id_seccion FROM seccion WHERE nom_seccion='$seccionesDSe'";
+		$toRet+="A: "+$sqlA+"\n";
+		$consulta=mysql_query($sqlA);
 		$fila=mysql_fetch_assoc($consulta);
 		$num_Sec=$fila['id_seccion'];
-		$sql="DELETE FROM seccion WHERE id_seccion=$num_Sec";
-		$result=mysql_query($sql);
+		$sqlB="DELETE FROM seccion WHERE id_seccion=$num_Sec";
+		$toRet+="B: "+$sqlB+"\n";
+
+		$result=mysql_query($sqlB);
 		
-		$consulta1=mysql_query("SELECT id_subseccion FROM subseccion WHERE id_seccion='$num_Sec'");
+		$sqlC="SELECT id_subseccion FROM subseccion WHERE id_seccion='$num_Sec'";
+		$consulta1=mysql_query($sqlC);
+		$toRet+="C: "+$sqlC+"\n";
 		while($fila1=mysql_fetch_array($consulta1)){
-			$sql1="DELETE FROM subseccion WHERE id_subseccion=$fila1[id_subseccion]";
-			$result1=mysql_query($sql1);
+			$sqlD="DELETE FROM subseccion WHERE id_subseccion=$fila1[id_subseccion]";
+			$result1=mysql_query($sqlD);
+			$toRet+="   D: "+$sqlD+"\n";
 		}
 		
-		$consulta2=mysql_query("SELECT id FROM pregunta WHERE id_Sec='$num_Sec'");
+		$sqlE="SELECT id FROM pregunta WHERE id_Sec='$num_Sec'";
+		$consulta2=mysql_query($sqlE);
+		$toRet+="B: "+$sqlE+"\n";
 		while($fila2=mysql_fetch_array($consulta2)){
-			$sql2="DELETE FROM pregunta WHERE id=$fila2[id]";
-			$result2=mysql_query($sql2);
+			$sqlF="DELETE FROM pregunta WHERE id=$fila2[id]";
+			$result2=mysql_query($sqlF);
+			$toRet+="     F: "+$sqlF+"\n";
 		}	
 	}
+	return $toRet;
 }
 
 function añadirSubseccion(){
@@ -396,10 +453,10 @@ function añadirRespuesta(){
 
 			$op1=$_POST['opcion1'];
 			$sql1="INSERT INTO respuesta (id_pre, respuesta) VALUES ('$num_Pre','$op1')";
-		
+			$result2=mysql_query($sql1); // hay que pasarle el result a cada cadena.
+
 			$op2=$_POST['opcion2'];
 			$sql2="INSERT INTO respuesta (id_pre, respuesta) VALUES ('$num_Pre','$op2')";
-		return $num_Pre;
 
 		if (!empty($_POST['opcion3'])){
 			$op3=$_POST['opcion3'];
@@ -415,6 +472,10 @@ function añadirRespuesta(){
 /// MAIN
 if( isset( $_POST["funcion"]) && $_POST["funcion"]=="añadirCuestionario") {
 	echo añadirCuestionario();
+}
+
+if( isset( $_POST["funcion"]) && $_POST["funcion"]=="buscarDatosUsuario") {
+	echo buscarDatosUsuario();
 }
 
 if( isset( $_POST["funcion"]) && $_POST["funcion"]=="listadoSecciones") {

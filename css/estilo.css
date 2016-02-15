@@ -25,22 +25,56 @@ label{
 }
 
 h1{
-	margin: 10px;
-	color: orange;
+	margin: 30px;
+	color: #8e0014;
 	font-family: Verdana, Helvetica, Arial;
 	font-size: 30px;
 }
 h2{
 	margin: 20px;
-	color: #088A08;
+	color: #FF0000;
+	font-family: Verdana, Helvetica, Arial;
+	font-size: 20px;
+}
+h3{
+	margin: 30px;
+	color: #FF0000;
 	font-family: Verdana, Helvetica, Arial;
 	font-size: 20px;
 }
 
 th, td {
     padding: 15px;
-	}
+}
 
+select {
+	padding: 5px;
+	font-size: 16px;
+	border: 1px solid #ccc;
+	height: 34px;
+	background-color:#F2F2F2;
+}
+
+#contenedor{
+	
+}
+
+#cabecera{
+}
+
+#menu{
+	float: left;
+	width: 30%;
+}
+
+#contenido{
+	float: left;
+	width: 70%;
+}
+
+#pie{
+	clear: both;
+}
 
 #selectDesplegable{
 	margin:10px;
@@ -53,60 +87,9 @@ th, td {
 #login{
 	margin:50px;
 	margin-right: 10px;
-	width:500px;
-	height:250px;
 	background: #fff;
-	border: 5px solid green;
+	border: 5px solid #8e0014;
 	text-align: center;
-	alignment-baseline: central;
-}
-
-#cabecera{
-	padding:10px;
-	float:left;
-	width:960px;
-	height:100px;
-	background: #fff;
-
-}
-
-#menu{
-	padding:20px;
-	width:300px;
-	height:1000px;
-	background: #fff;
-	clear: both;
-	float: left;
-	color:purple;
-	margin: 10px;
-	font-family: Verdana, Helvetica, Arial;
-	background-color: #A9F5A9
-}
-
-#contenido{
-	margin:10px;
-	width:1000px;
-	height:1000px;
-	float:left;
-	background: #fff;
-	border: 1px solid red;
-}
-
-#TablaPreguntas{
-	margin:10px;
-	width:250px;
-	height: 1000px;
-	float:left;
-	background: #fff;
-	border: 1px solid green;
-}
-
-#pie{
-	width:960px;
-	height:100px;
-	float:left;
-	background: #fff;
-
 }
 
 #button{
@@ -134,13 +117,45 @@ th, td {
 	border: 1px solid #dedede;
 	border-radius: 5px;
 	color: white;
-	background: orange;
-	font: bold 15px HelveticaNeue, Arial;
+	background: #E8450C;
+	font: bold 20px Helvetica, Arial;
 	padding: 8px;
+	width: 300px;
+	height: 100px;
 	margin-top: 10px;
 	margin-bottom: 10px;
-	width:200px;
-    height:100px;
+}
+
+#buttonDialogo1,#buttonDialogo2,#buttonDialogo3,#buttonDialogo4,#buttonDialogo5,#buttonDialogo6{
+	border: 1px solid #dedede;
+	border-radius: 5px;
+	color: white;
+	background: #FF8A0D;
+	font: bold 20px Helvetica, Arial;
+	padding: 8px;
+	width: 240px;
+	height: 80px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#cuestionario{
+	background: #fff;
+	border: 5px solid #FF0000;
+	text-align: center;
+}
+
+#buscarCuestionario{
+	background: #fff;
+	border: 5px solid #FF0000;
+	text-align: center;
+}
+
+#tablaSecciones{
+	height: 100px;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	border-radius: 8px;
 }
 
 
