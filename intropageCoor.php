@@ -27,7 +27,7 @@ include("vistaContenido.php")
 <div id="cabecera" >
 	<h1>Bienvenido a Down Progress, sistema de seguimiento.</h1>
 	<h3>¿Que tal está <span><?php echo $_SESSION['session_username'];?>! </span>?
-		Está en la sesión de Administrador, si quiere finalizar sesión pulse <a href="logout.php">aquí</a> </h3>
+		Está en la sesión de Administrador, para finalizar sesión pulse <a href="logout.php">aquí</a> </h3>
 </div>
 
 
@@ -92,9 +92,9 @@ include("vistaContenido.php")
 				?>			
 
 			<p class ="submit">
-				<input type="button" id="button" class="button" value="Modificar Usuario"
-					   onclick="modificarUsuario()">
-				<input type="button" id="button" class="button" value="Eliminar Usuario"
+				<input type="button" id="button" class="button" value="Ver Usuario"
+					   onclick="verUsuario()">
+				<input type="button" id="buttonD" class="buttonD" value="Eliminar Usuario"
 					   onclick="eliminarUsuario()"><br><br>
 			</p>
 			
@@ -115,11 +115,11 @@ include("vistaContenido.php")
 			<div id="cuestionario" style="display: block">
 			<h2>Nuevo Cuestionario</h2>
 			<label>Nombre Cuestionario:<br />
-			<input type="text" id="nom_CuestN" class value=""><br><br>
+			<input type="text" id="nom_CuestN" class value=""><br>
 
 			<p class ="submit">
 				<input type="button" id="button" class="button" value="Añadir Cuestionario"
-					   onclick="addCuestionario()"><br><br>
+					   onclick="addCuestionario()">
 			</p>
 			
 			</div>
@@ -141,33 +141,38 @@ include("vistaContenido.php")
 				?>			
 
 			<p class ="submit">
-				<input type="button" id="button" class="button" value="Buscar Cuestionario"
-					   onclick="verCuestionario();listadoSecciones()"><br><br>
+				<input type="button" id="button" class="button" value="Modificar Cuestionario"
+					   onclick="verCuestionario(),listadoSecciones()">
+				<input type="button" id="buttonD" class="buttonD" value="Borrar Cuestionario"
+					   onclick="">
 			</p>
 			
 			</div>
 					
 			<div id="Lista" style="display:none">
-			
-			<div id="botonesListaPreguntas">
 			<table>
+				
 			<tr>
-				<td> <p class ="submit"> <input type="button" id="buttonDialogo1" class="button" value="Nueva Seccion" onclick="nuevaSeccion()"> </p></td>
-				<td> <p class ="submit"> <input type="button" id="buttonDialogo3" class="button" value="Nueva Subsección" onclick="nuevaSubseccion()"> </p></td>
-				<td> <p class ="submit"> <input type="button" id="buttonDialogo5" class="button" value="Nueva Pregunta" onclick="nuevaPregunta()"> </p></td>			
-			</tr>
-
-			<tr>
-				<td> <p class ="submit"> <input type="button" id="buttonDialogo2" class="button" value="Eliminar Seccion" onclick="eliminaSeccion()"> </p> </td>
-				<td> <p class ="submit"> <input type="button" id="buttonDialogo4" class="button" value="Eliminar Subsección" onclick="eliminaSubseccion()"> </p></td>			
-				<td> <p class ="submit"> <input type="button" id="buttonDialogo6" class="button" value="Eliminar Pregunta"onclick="eliminaPregunta()"> </p></td>
+				<td>
+			<div id="ListadoPreguntas"></div>
+				</td>
+				
+			<div id="botonesListaPreguntas">
+				
+			<p class ="submit">
+				<td>
+			<input type="button" id="buttonDialogo1" class="button" value="Nueva Seccion" onclick="nuevaSeccion()">
+			<input type="button" id="buttonDialogo2" class="button" value="Eliminar Seccion" onclick="eliminaSeccion()">
+			<input type="button" id="buttonDialogo3" class="button" value="Nueva Subsección" onclick="nuevaSubseccion()">
+			<input type="button" id="buttonDialogo4" class="button" value="Eliminar Subsección" onclick="eliminaSubseccion()">
+			<input type="button" id="buttonDialogo5" class="button" value="Nueva Pregunta" onclick="nuevaPregunta()">
+			<input type="button" id="buttonDialogo6" class="button" value="Eliminar Pregunta"onclick="eliminaPregunta()">
+				</td>
+			</p>
+			
+			</div>
 			</tr>
 			</table>
-			</div>
-
-			<div id="ListadoPreguntas" STYLE=" height: 300px; width: 600px; overflow: auto;"></div>
-
-
 			</div>
 			
 			
@@ -187,9 +192,10 @@ include("vistaContenido.php")
 				<label>O selecciona otra, y escribe una nueva aquí:<br>
 		
 				<input type="text" name="nom_Sec" id="nom_Sec"  size="20" value=""><br><br>
+				
 				<p class ="submit">
 					<input type="button" id="buttonOK" classs="button" value="Añadir Sección a este cuestionario"
-						   onclick="addSeccion()"><br><br>
+						   onclick="addSeccion()">
 				</p>
 			</div>
 			
@@ -198,7 +204,7 @@ include("vistaContenido.php")
 				<?php echo "<select id='seccionesDSe'> </select><br><br>"?>			
 			
 				<p class ='submit'>
-				<input type='button' id='buttonOK' classs='button' value='Eliminar esta Sección de este cuestionario' onclick='deleteSeccion()'><br><br>
+				<input type='button' id='buttonOK' classs='button' value='Eliminar esta Sección de este cuestionario' onclick='deleteSeccion()'>
 				</p>
 			</div>
 			
@@ -223,7 +229,7 @@ include("vistaContenido.php")
 			
 				<input type="text" id="nom_Sub" class value=""><br><br>
 				<p class ="submit">
-					<input type="button"id="buttonOK" value="Añadir Subsección a este cuestionario" onclick="addSubseccion()"><br><br>
+					<input type="button"id="buttonOK" value="Añadir Subsección a este cuestionario" onclick="addSubseccion()">
 				</p>
 			</div>
 			
@@ -238,7 +244,7 @@ include("vistaContenido.php")
 				
 				?>
 				<p class ="submit">
-					<input type="button"id="buttonOK" value="Eliminar Subsección de este cuestionario" onclick="deleteSubseccion()"><br><br>
+					<input type="button"id="buttonOK" value="Eliminar Subsección de este cuestionario" onclick="deleteSubseccion()">
 				</p>
 
 			</div>
@@ -247,31 +253,26 @@ include("vistaContenido.php")
 				<label>Título pregunta:
 				<input type="text" id="tit_Pregunta" class value=""><br>
 				
-				<label>Selecciona la sección donde quiere insertar la pregunta:
-				<?php echo "<select id='seccionesNPr' onchange='listadoSubseccionesNPr()'> </select><br>" ?>
-				
-				<label>Selecciona la subseccion:<br>
+				<label>Selecciona donde quiere insertar la pregunta:
+				<?php echo "<select id='seccionesNPr' onchange='listadoSubseccionesNPr()'> </select>" ?>
 				<?php echo "<select id='subseccionesNPr'> </select><br>";?>
 
 				<label>Tipo de respuesta:
-				<select id='TiposRespuestas'>
-					<option value="checkbox">Checkbox</option>
-					<option value="desplegable">Despegable</option>
-					<option value="Radio Button">Radio Button</option>
-					<option value="Respuesta Corta">Radio Button</option>
+				<select id='TiposRespuestas' onchange='tipoRespuesta()'>
+					<option value="ninguna">Selecciona un tipo de respuesta</option>
+					<option value="corta">Respuesta corta</option>
+					<option value="larga">Respuesta larga</option>
+					<option value="desplegable">Desplegable</option>
+					<option value="botones">Botones para marcar</option>
+					<option value="cuadros">Cuadros para chequear</option>
 				</select><br>
 
-				<label>Opcion 1
-				<input type="text" id="opcion1" class value=""><br>
-				<label>Opcion 2
-				<input type="text" id="opcion2" class value=""><br>
-				<label>Opcion 3
-				<input type="text" id="opcion3" class value=""><br>
-				<label>Opcion 4
-				<input type="text" id="opcion4" class value=""><br><br>
-
+				<div id="opcionesResp" >
+				</div>
+				<label>Puede añadir una imagen o video como prueba de la respuesta:
 				<p class ="submit">
-					<input type="button"id="buttonOK" value="Añadir Pregunta a este cuestionario" onclick="addPregunta();addRespuesta()"><br><br>
+					<input type="button"id="buttonImagen" value='Añadir Prueba' onclick="">
+					<input type="button"id="buttonOK" value="Añadir Pregunta a este cuestionario" onclick="addPregunta();addRespuesta()">
 				</p>
 			</div>
 
@@ -287,7 +288,7 @@ include("vistaContenido.php")
 				<?php echo "<select id='preguntas'> </select><br>"?>
 
 				<p class ="submit">
-					<input type="button"id="buttonOK" value="Eliminar Pregunta de este cuestionario" onclick="deletePregunta()"><br><br>
+					<input type="button"id="buttonOK" value="Eliminar Pregunta de este cuestionario" onclick="deletePregunta()">
 				</p>	
 			</div>
 

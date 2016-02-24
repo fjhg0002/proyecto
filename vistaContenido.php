@@ -13,6 +13,8 @@
 			document.getElementById("nuevaSubseccion").style.display="none";
 			document.getElementById("eliminaSubseccion").style.display="none";
 			document.getElementById("nuevaPregunta").style.display="none";
+			document.getElementById("DatosUsuario").style.display="none";
+			document.getElementById("buscarUsuario").style.display="none";
 		}
 		function nuevaSeccion() {
 			ocultarBloques();
@@ -42,7 +44,7 @@
             document.getElementById("buscarUsuario").style.display="none";
         }
 		
-		function modificarUsuario() {
+		function verUsuario() {
 		alert( $("#usuario").val() );
         $.post( "modelo.php"
 			   , { usuario: $("#usuario").val()
@@ -52,6 +54,36 @@
 			$('#DatosUsuario').html( data )
 			$("DatosUsuario").show()
 			document.getElementById("DatosUsuario").style.display="block";
+			//$("#nom_Cuest").attr( "disabled", "disabled");
+		});
+		}
+		
+		function modificarUsuario() {
+		alert( $("#usuario").val() );
+        $.post( "modelo.php"
+			   , { usuario: $("#usuario").val()
+			   , nameM: $("#nameM").val()
+			   , last_nameM: $("#last_nameM").val()
+			   , typeM: $("#typeM").val()
+			   , emailM: $("#emailM").val()
+			   , usernameM: $("#usernameM").val()
+			   , passwordM: $("#passwordM").val()
+			   , RpasswordM: $("#RpasswordM").val()
+			   , funcion: "modificarUsuario"}
+			   , function( data ) {
+				alert(data);
+			//$("#nom_Cuest").attr( "disabled", "disabled");
+		});
+		}
+		
+		function eliminarUsuario() {
+		alert( $("#usuario").val() );
+        $.post( "modelo.php"
+			   , { usuario: $("#usuario").val()
+			   , funcion: "eliminarUsuario"
+			   , function: ocultaBuscarUsuario()}
+			   , function( data ) {
+			alert("Usuario Eliminado");
 			//$("#nom_Cuest").attr( "disabled", "disabled");
 		});
 		}
@@ -81,6 +113,11 @@
 					$("#seccionesDSe").text("");
 					$("#seccionesDSu").text("");
 					$("#seccionesDPr").text("");
+					$('#seccionesNSu').append( "<option value=\"Ninguna\">Selecciona una sección</option>" );
+					$('#seccionesNPr').append( "<option value=\"Ninguna\">Selecciona una sección</option>" );
+					$('#seccionesDSe').append( "<option value=\"Ninguna\">Selecciona una sección</option>" );
+					$('#seccionesDSu').append( "<option value=\"Ninguna\">Selecciona una sección</option>" );
+					$('#seccionesDPr').append( "<option value=\"Ninguna\">Selecciona una sección</option>" );
 					for( var i=0; i<opciones.length; ++i ){
 						$('#seccionesNSu').append( "<option value=\""+ opciones[i] +"\">" + opciones[i] +"</option>" );
 						$('#seccionesNPr').append( "<option value=\""+ opciones[i] +"\">" + opciones[i] +"</option>" );
@@ -90,16 +127,19 @@
 				   }
 				   });
         }
+
 		
 		function listadoSubseccionesDSu() {
 			alert ("Bucando subsecciones de " + $("#seccionesDSu").val());
             $.post( "modelo.php"
 				   ,{ seccionesDSu: $("#seccionesDSu").val()
+				   , nom_CuestB: $("#nom_CuestB").val()
 				   , funcion: "listadoSubseccionesDSu" }
 				   , function( data ) {
 					alert(data);
 					var opciones=data.split(",");
 					$("#subseccionesDSu").text("");
+					$('#subseccionesDSu').append( "<option value=\"Ninguna\">Selecciona una subsección</option>" );
 					//$('#subseccionesDSu').append( "<option value=\""+ 'ninguna' +"\">" + 'Selecciona una Subsección' +"</option>" );
 					for( var i=0; i<opciones.length; ++i ){
 						$('#subseccionesDSu').append( "<option value=\""+ opciones[i] +"\">" + opciones[i] +"</option>" );
@@ -111,6 +151,7 @@
 			alert ("añadiendo" + $("#seccionesNPr").val());
             $.post( "modelo.php"
 				   ,{ seccionesNPr: $("#seccionesNPr").val()
+				   , nom_CuestB: $("#nom_CuestB").val()
 				   , funcion: "listadoSubseccionesNPr" }
 				   , function( data ) {
 					alert(data);
@@ -127,6 +168,7 @@
 			alert ("añadiendo" + $("#seccionesDPr").val());
             $.post( "modelo.php"
 				   ,{ seccionesDPr: $("#seccionesDPr").val()
+				   , nom_CuestB: $("#nom_CuestB").val()
 				   , funcion: "listadoSubseccionesDPr" }
 				   , function( data ) {
 					alert(data);
@@ -147,7 +189,8 @@
 				   , function( data ) {
 					alert(data);
 					var opciones2=data.split(",");
-					$("#preguntas").text("");
+					$("#preguntas").text("");				
+					$('#preguntas').append( "<option value=\"Ninguna\">Selecciona una pregunta</option>" );					
 					for( var i=0; i<opciones2.length; ++i ){
 						$('#preguntas').append( "<option value=\""+ opciones2[i] +"\">" + opciones2[i] +"</option>" );
 				   }
@@ -184,6 +227,7 @@
 		alert( "deleting seccion "+$("#seccionesDSe").val() );
         $.post( "modelo.php"
 			   , { seccionesDSe: $("#seccionesDSe").val()
+			   , nom_CuestB: $("#nom_CuestB").val()
 			   , funcion: "eliminarSeccion" }
 			   , function( data ) {
 			alert( "Recibido: "+data + " Seccion: " + $("#seccionesDSe").val() );
@@ -198,6 +242,7 @@
 			   , { seccionesNSu: $("#seccionesNSu").val()
 			   , subseccionesNSu: $("#subseccionesNSu").val()
 			   , nom_Sub: $("#nom_Sub").val()
+			   , nom_CuestB: $("#nom_CuestB").val()
 			   , funcion: "añadirSubseccion" }
 			   , function( data ) {
 			alert( "Recibido: "+data)
@@ -205,10 +250,11 @@
 		}
 		
 		function deleteSubseccion() {
-		alert("deleting subseccion" + $("#secciones2").val() + $("#listaSubsecciones").val());
+		alert("deleting subseccion" + $("#seccionesDSu").val() + $("#subseccionesDSu").val());
 		$.post("modelo.php"
-			   , { secciones2: $("#secciones2").val()
-			   , listaSubsecciones: $("#listaSubsecciones").val()
+			   , { seccionesDSu: $("#seccionesDSu").val()
+			   , subseccionesDSu: $("#subseccionesDSu").val()
+			   , nom_CuestB: $("#nom_CuestB").val()
 			   , funcion: "eliminarSubseccion" }
 			   , function( data ) {
 			alert( "Recibido: "+data)
@@ -222,6 +268,7 @@
 			   , seccionesNPr: $("#seccionesNPr").val()
 			   , subseccionesNPr: $("#subseccionesNPr").val()
 			   , TiposRespuestas: $("#TiposRespuestas").val()
+			   , nom_CuestB: $("#nom_CuestB").val()
 			   , funcion: "añadirPregunta" }
 			   , function( data ) {
 			alert( "Pregunta añadida: "+data)
@@ -232,6 +279,9 @@
 		alert("adding respuesta " + $("#tit_Pregunta").val());
 		$.post("modelo.php"
 			   , { tit_Pregunta: $("#tit_Pregunta").val()
+			   , TiposRespuestas: $("#TiposRespuestas").val()
+			   , RLarga: $("#RLarga").val()
+			   , RCorta: $("#RCorta").val()
 			   , opcion1: $("#opcion1").val()
 			   , opcion2: $("#opcion2").val()
 			   , opcion3: $("#opcion3").val()
@@ -243,10 +293,10 @@
 		}
 		
 		function deletePregunta() {
-		alert("deleting pregunta" + $("#seccionesP").val() + $("#subseccionesP").val());
+		alert("deleting pregunta" + $("#seccionesDPr").val() + $("#subseccionesDPr").val());
 		$.post("modelo.php"
-			   , { seccionesP: $("#seccionesP").val()
-			   , subseccionesP: $("#subseccionesP").val()
+			   , { seccionesDPr: $("#seccionesDPr").val()
+			   , subseccionesDPr: $("#subseccionesDPr").val()
 			   , preguntas: $("#preguntas").val()
 			   , funcion: "eliminarPregunta" }
 			   , function( data ) {
@@ -268,7 +318,7 @@
               .button()
               .click(function dialogSeccion() {
                      $("#nuevaSeccion").dialog("option", "width", 600);
-                     $("#nuevaSeccion").dialog("option", "height", 370);
+                     $("#nuevaSeccion").dialog("option", "height", 425);
                      $("#nuevaSeccion").dialog("option", "resizable", false);
                      $("#nuevaSeccion").dialog("open");
                      });
@@ -288,7 +338,7 @@
               .button()
               .click(function dialogDelSeccion() {
                      $("#eliminaSeccion").dialog("option", "width", 600);
-                     $("#eliminaSeccion").dialog("option", "height", 290);
+                     $("#eliminaSeccion").dialog("option", "height", 330);
                      $("#eliminaSeccion").dialog("option", "resizable", false);
                      $("#eliminaSeccion").dialog("open");
                      });
@@ -308,7 +358,7 @@
               .button()
               .click(function dialogSubseccion() {
                      $("#nuevaSubseccion").dialog("option", "width", 600);
-                     $("#nuevaSubseccion").dialog("option", "height", 450);
+                     $("#nuevaSubseccion").dialog("option", "height", 490);
                      $("#nuevaSubseccion").dialog("option", "resizable", false);
                      $("#nuevaSubseccion").dialog("open");
                      });
@@ -328,7 +378,7 @@
               .button()
               .click(function dialogSubseccion() {
                      $("#eliminaSubseccion").dialog("option", "width", 600);
-                     $("#eliminaSubseccion").dialog("option", "height", 420);
+                     $("#eliminaSubseccion").dialog("option", "height", 410);
                      $("#eliminaSubseccion").dialog("option", "resizable", false);
                      $("#eliminaSubseccion").dialog("open");
                      });
@@ -348,7 +398,7 @@
               .button()
               .click(function dialogPregunta() {
                      $("#nuevaPregunta").dialog("option", "width", 600);
-                     $("#nuevaPregunta").dialog("option", "height", 700);
+                     $("#nuevaPregunta").dialog("option", "height", 790);
                      $("#nuevaPregunta").dialog("option", "resizable", false);
                      $("#nuevaPregunta").dialog("open");
                      });
@@ -368,12 +418,26 @@
               .button()
               .click(function dialogDelPregunta() {
                      $("#eliminaPregunta").dialog("option", "width", 600);
-                     $("#eliminaPregunta").dialog("option", "height", 400);
+                     $("#eliminaPregunta").dialog("option", "height", 455);
                      $("#eliminaPregunta").dialog("option", "resizable", false);
                      $("#eliminaPregunta").dialog("open");
                      });
 		});
-
+		
+		function tipoRespuesta() {
+		alert( "el tipo de respuesta es "+$("#TiposRespuestas").val() );
+        $.post( "modelo.php"
+			   , { TiposRespuestas: $("#TiposRespuestas").val()
+			   , funcion: "tipoRespuesta"}
+			   , function( data ) {
+				alert(data);
+			$('#opcionesResp').html( data )
+			$("opcionesResp").show()
+			document.getElementById("OpcionesResp").style.display="block";
+			//$("#nom_Cuest").attr( "disabled", "disabled");
+		});
+		}
+		
 </script>
 		
 	</head>

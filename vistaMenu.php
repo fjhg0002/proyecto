@@ -7,6 +7,7 @@
 				document.getElementById("buscarCuestionario").style.display="none";
 				document.getElementById("buscarUsuario").style.display="none";
 				document.getElementById("Lista").style.display="none";
+				document.getElementById("DatosUsuario").style.display="none";
 			}
 			function nuevoUsuario() {
 				ocultarTodos();
